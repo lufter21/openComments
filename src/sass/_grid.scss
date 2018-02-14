@@ -3,8 +3,7 @@
 	overflow: hidden;
 	min-height: 100%;
 	position: relative;
-	padding: 100px 0;
-	background-image: linear-gradient(to bottom, #ffe716, #fff8ba);
+	padding: 55px 0;
 	&_fsscroll{
 		padding-top: 0 !important;
 	}
@@ -12,7 +11,7 @@
 	&__full-height{
 		@include fwh;
 		z-index: 2;
-		padding: 100px 0;
+		padding: 55px 0;
 		overflow: hidden;
 	}
 
@@ -20,7 +19,7 @@
 
 .wrap{
 	margin: 0 auto;
-	max-width: 980px;
+	max-width: 1520px;
 	padding-left: 30px;
 	padding-right: 30px;
 	@media(max-width: 1000px){
@@ -46,7 +45,6 @@
 	padding-top: 50px;
 	padding-bottom: 50px;
 }
-
 
 .row{
 	@include clr;

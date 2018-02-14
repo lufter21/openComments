@@ -5,23 +5,18 @@
 	top: 0;
 	left: 0;
 	z-index: 8;
-	transition: .21s;
-	&_fixed,
-	&.toggled{
-		background: #FFF;
-		box-shadow: 0 2px 5px rgba(0,0,0,.21);
-	}
+	background: #FFF;
+	box-shadow: 0 2px 5px rgba(0,0,0,.21);
 	&__wrap{
-		height: 100px;
+		height: 55px;
 		max-width: none;
 	}
 	&__logo{
-		height: 100px;
-		padding-top: 20px;
-		padding-bottom: 20px;
-	}
-	&__right{
-		float: right;
+		height: 55px;
+		padding-top: 11px;
+		padding-bottom: 8px;
+		position: relative;
+		z-index: 2;
 	}
 	&__menu-wrap{
 		float: left;
@@ -112,10 +107,8 @@
 		visibility: hidden;
 		opacity: 0;
 		transition: .3s;
-		.header_fixed &{
-			background: #ffffff;
-			box-shadow: 0 3px 3px rgba(0,0,0,.11);
-		}
+		background: #ffffff;
+		box-shadow: 0 3px 3px rgba(0,0,0,.11);
 		&-item{
 			float: left;
 			margin-right: 25px;
