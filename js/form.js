@@ -562,9 +562,13 @@ var Form = {
 			var f = this;
 			if (_.validate(f)) {
 				_.submitButton(f, false);
-				form(f, function(ret) {
-					_.submitButton(f, ret);
-				});
+				if (form !== undefined) {
+					form(f, function(ret) {
+						_.submitButton(f, ret);
+					});
+				} else {
+					return true;
+				}
 			}
 			return false;
 		});
@@ -654,28 +658,16 @@ $(document).ready(function() {
 		}
 	});
 
-	//textarea with variable height
-	$('.form__textarea_var-h').each(function() {
-		var _$ = $(this),
-		taW = _$.innerWidth();
-
-		_$.parent().append('<div class="form__textarea-shape" style="width:'+ taW +'px;"></div>');
-
-	});
-
 	setTextareaHeight = function (_$) {
 		var val = _$.val(),
-		Shape = _$.parent().find('.form__textarea-shape');
-
-		Shape.html(val);
-
-		_$.css('height', Shape.innerHeight());
+		Shape = _$.parent().find('.form__textarea-mirror');
+		val = val.replace(/\n/g, '<br>');
+		Shape.html(val +'&nbsp;');
 	}
 
-	$('body').on('keyup', '.form__textarea_var-h', function() {
+	$('body').on('input', '.form__textarea_var-h', function() {
 		setTextareaHeight($(this));
 	});
-
 
 	Form.submit('#form1', function(form, callback) {
 		var _f = $(form);
@@ -697,28 +689,13 @@ $(document).ready(function() {
 		
 	});
 
-	Form.submit('#form2', function(form, callback) {
+	Form.submit('#comment-form', function(form, callback) {
 		var _f = $(form);
 		Popup.message('#message-popup', 'Форма отправлена', function() {
 			callback(true);
 		});
 	});
 
+	Form.submit('#form3');
 
 });
-
-
-
-//GetCountriesAndCitiesList
-function dAirGetInit() {
-	dAirGet.countries(function(c) {
-		var contryObj = $.parseJSON(c),
-		countryOpt = $('.form__select-options_countries'),
-		countryOpt2 = $('.form__select-options_countries2');
-		
-		for (var i = 0; i < contryObj.length; i++) {
-			countryOpt.append('<li><button type="button" class="form__select-val" data-value="'+ contryObj[i].id +'">'+ contryObj[i].name +'</button></li>');
-			countryOpt2.append('<li><button type="button" class="form__select-val" data-value="'+ contryObj[i].id +'" data-original="'+ contryObj[i].name +'">'+ contryObj[i].name +'</button></li>');
-		}
-	});
-}

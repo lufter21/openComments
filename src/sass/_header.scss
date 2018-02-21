@@ -6,50 +6,54 @@
 	left: 0;
 	z-index: 8;
 	background: #FFF;
-	box-shadow: 0 2px 5px rgba(0,0,0,.21);
+	box-shadow: 0 1px 11px rgba(0,0,0,.21);
 	&__wrap{
 		height: 55px;
 		max-width: none;
 	}
 	&__logo{
 		height: 55px;
-		padding-top: 11px;
-		padding-bottom: 8px;
+		padding-top: 12px;
+		padding-bottom: 3px;
 		position: relative;
 		z-index: 2;
 	}
-	&__menu-wrap{
-		float: left;
-	}
 	&__nav{
 		float: left;
+		&-wrap{
+			float: right;
+		}
 	}
 	&__toggle{
 		display: none !important;
 	}
+	&__user{
+		float: left;
+		margin-left: 75px;
+	}
 	
 	@media(max-width: 1000px){
-		&__menu-wrap{
-			display: block;
-			visibility: hidden;
-			opacity: 0;
-			position: fixed;
-			top: 100px;
-			bottom: 0;
-			left: 0;
-			width: 100%;
-			overflow: auto;
-			background: #FFF;
-			border-top: 1px solid $l-gray;
-			transition: .5s;
-			&.toggled{
-				visibility: visible;
-				opacity: 1;
-			}
-		}
 		&__nav{
 			float: none;
 			padding: 20px 0;
+			&-wrap{
+				float: none;
+				visibility: hidden;
+				opacity: 0;
+				position: fixed;
+				top: 100px;
+				bottom: 0;
+				left: 0;
+				width: 100%;
+				overflow: auto;
+				background: #FFF;
+				border-top: 1px solid $gy;
+				transition: .5s;
+				&.toggled{
+					visibility: visible;
+					opacity: 1;
+				}
+			}
 		}
 		&__toggle{
 			display: block !important;
@@ -65,7 +69,7 @@
 .menu{
 	@include clr;
 	list-style: none;
-	padding-top: 5px;
+	padding-top: 12px;
 	&__item{
 		float: left;
 		margin-left: 45px;
@@ -77,12 +81,10 @@
 		}
 	}
 	&__a{
-		font-size: 18px;
-		font-weight: 500;
 		text-decoration: none;
 		transition: .5s;
 		&:hover{
-			color: $red;
+			color: $rd;
 		}
 	}
 	&__arr{
@@ -120,7 +122,7 @@
 			display: inline-block;
 			transition: .5s;
 			&:hover{
-				color: $red;
+				color: $rd;
 			}
 		}
 		.menu__item_has-children:hover &{
@@ -164,5 +166,32 @@
 				display: block;
 			}
 		}
+	}
+}
+
+/*User*/
+.user{
+	height: 34px;
+	position: relative;
+	&__thumb{
+		display: inline-block;
+		width: 34px;
+		height: 34px;
+		vertical-align: middle;
+		overflow: hidden;
+	}
+	&__name{
+		font-size: 14px;
+		font-weight: 500;
+		display: inline-block;
+		vertical-align: middle;
+		margin-right: 10px;
+		text-align: right;
+	}
+	&__bubble{
+		width: 250px;
+		top: 45px;
+		right: 0;
+		padding: 25px;
 	}
 }

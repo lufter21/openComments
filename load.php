@@ -1,6 +1,4 @@
 <?php
-
-
 error_reporting(E_ALL ^ E_NOTICE);
 ini_set('display_errors', 1);
 
@@ -16,6 +14,4 @@ function loadClasses($class_name) {
 }
 
 spl_autoload_register('loadClasses');
-
-
 ?>

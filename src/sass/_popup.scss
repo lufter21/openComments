@@ -44,8 +44,8 @@
 	}
 	&__close{
 		position:absolute !important;
-		right:-29px;
-		top:4px;
+		right:5px;
+		top:40px;
 		z-index:3;
 		cursor:pointer;
 	}
@@ -200,4 +200,9 @@ body.is-popup-opened{
 			}
 		}
 	}
+}
+
+/*rules*/
+.p-rules{
+	max-width: 1000px;
 }

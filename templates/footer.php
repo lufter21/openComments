@@ -1,21 +1,7 @@
 <!--FOOTER/-->
 <footer class="footer">
-	<div class="row-col-mid wrap footer__wrap">
-		<div class="col-3 x1600-col-2">
-			<div class="footer__logo">
-				<a href="#"><img src="/images/logo.svg" alt="logo"></a>
-			</div>
-		</div>
-		<div class="col-8 x1600-col-10 col-offset-1 x1600-col-offset-0">
-			<div class="footer__txt">
-				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-			</div>
-		</div>
+	<div class="row wrap footer__wrap">
+		
 	</div>
 </footer>
 
@@ -71,6 +57,13 @@
 		</div>
 	</div>
 
+	<div id="rules" class="p-rules popup__window">
+		<button class="popup__close btn-close"></button>
+		<div class="popup__inner" style="height: 100px;">
+			
+		</div> 
+	</div>
+
 </div>
 <!--/POPUPs-->
 
@@ -82,8 +75,8 @@
 <script src="/js/images.js"></script>
 <script src="/js/popup.js"></script>
 <script src="/js/button.js"></script>
+<script src="/js/form.js"></script>
 <script src="/js/common.js"></script>
-<script src="/js/more.js"></script>
 
 </body>
 </html>

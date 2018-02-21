@@ -18,26 +18,39 @@
 	<div class="row-col-mid wrap header__wrap">
 		<div class="header__logo col-3">
 			<div class="middle-img-wrap">
-				<a href="/" title="На главную"><img src="/images/logo.svg" alt="logo" class="middle-img"></a>
+				<a href="/" title="На главную"><img src="/images/opencomments.svg" alt="opencomments" class="middle-img"></a>
 			</div>
 		</div>
 		<div class="col-9">
 			
-				<div id="header-mob-menu" class="header__menu-wrap">
+				<div id="header-mob-menu" class="header__nav-wrap">
+
 					<nav class="header__nav">
 						<ul class="menu">
-							<li class="menu__item">
-								<a href="/" class="menu__a">Главная</a>
-							</li>
 							<li class="menu__item">
 								<a href="#rules" class="js-open-popup menu__a">Правила</a>
 							</li>
 						</ul>
 					</nav>
+
+					<div class="header__user user middle">
+						<a href="#" class="js-toggle" data-target-elements="#user-menu">
+							<span class="user__name">
+								Lufter
+							</span>
+							<span class="user__thumb">
+								<img src="../../images/avatar.png" alt="avatar" class="cover-img">
+							</span>
+						</a>
+						<div id="user-menu" class="user__bubble bubble">
+							
+						</div>
+					</div>
+
 				</div>
 			
 		</div>
-		<button class="js-toggle toggle header__toggle" data-target-id="header-mob-menu" data-target-class="header"><span></span><span></span><span></span><span></span></button>
+		<button class="js-toggle toggle header__toggle" data-target-elements="#header-mob-menu,.header"><span></span><span></span><span></span><span></span></button>
 	</div>
 </header>
 <!--/HEADER-->

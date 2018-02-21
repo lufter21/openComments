@@ -3,10 +3,12 @@ abstract class Core {
 	
 	protected $_db;
 	public $user;
+	public $meta;
 
-	public function __construct() {
+	public function __construct($opt = '') {
 		$db = DbConnect::getInstance();
 		$this->_db = $db->getDb();
+		$this->_opt = $opt;
 		$this->user = $this->getUser();
 		$this->run();
 	}
@@ -14,6 +16,8 @@ abstract class Core {
 	protected function getUser() {
 
 		session_start();
+
+		$user_info = array();
 
 		if(!$_SESSION['access']){
 			if($_COOKIE['access']){
@@ -40,7 +44,7 @@ abstract class Core {
 
 		}
 
-		return $user_info ?: array();
+		return $user_info;
 	}
 	
 	protected function getMenu($menu_arr){

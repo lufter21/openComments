@@ -30,4 +30,13 @@ $(document).ready(function(){
 		}
 	});
 
+	//fixed block
+	$('.fix-block').each(function() {
+		var _$ = $(this),
+		ofsT = _$.offset().top,
+		ofsL = _$.offset().left,
+		wd = _$.width();
+		_$.css({width: wd, top: ofsT, left: ofsL}).addClass('fix-block_fixed');
+	});
+
 });

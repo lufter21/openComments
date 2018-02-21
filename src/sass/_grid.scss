@@ -81,7 +81,7 @@
 			min-height: 1px;
 			padding-left: 15px;
 			padding-right: 15px;
-			font-size: 16px;
+			font-size: 1rem;
 		}
 
 	}
@@ -214,6 +214,8 @@
 	}
 
 	&-center{
+		float: none !important;
+		clear: both;
 		margin: auto;
 	}
 
@@ -235,7 +237,7 @@
 
 }
 
-/*middleBlock*/
+/*middle block*/
 .middle{
 	height: 100%;
 	font-size: 0;
@@ -249,11 +251,17 @@
 		display: inline-block;
 		width: 100%;
 		vertical-align: middle;
-		font-size: 16px;
+		font-size: 1rem;
 	}
 }
 
-
+/*fix block*/
+.fix-block{
+	&_fixed{
+		position: fixed !important;
+		z-index: 2;
+	}
+}
 
 @media(max-width: 1200px){
 	.vw1200{

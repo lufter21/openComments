@@ -3,8 +3,7 @@ class Comment extends Core {
 
 	public $resource;
 	public $comments;
-	public $meta;
-
+	
 	protected function run() {
 		$this->getResource();
 	}
@@ -28,16 +27,10 @@ class Comment extends Core {
 
 	private function getIframe() {
 		$iframe = '';
-		switch ($this->resource['source']) {
-			case 'youtube':
-			if (preg_match('/\?v=([\w\-]+)($|\&)/i', $this->resource['url'], $vid_id)) {
-				$iframe = '<iframe width="560" height="315" src="https://www.youtube.com/embed/'.$vid_id[1].'?rel=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
-			}
-			break;
-			
-			default:
-				# code...
-			break;
+		if (preg_match('/youtube.*?\?v=([\w\-]+)($|\&)/i', $this->resource['url'], $vid_id)) {
+			$iframe = '<iframe width="560" height="315" src="https://www.youtube.com/embed/'.$vid_id[1].'?rel=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
+		} else {
+			# code...
 		}
 		$this->resource['iframe'] = $iframe;
 	}
@@ -58,9 +51,13 @@ class Comment extends Core {
 	}
 
 	private function addResource($res) {
+		$ins_res = $this->_db->prepare('INSERT INTO resources (url,title) VALUES (:url,:title)');
+		$ins_res->execute(array(
+		'url'=>urldecode($res),
+		'title'=>''
+		));
 		header('Location: /comment?r='.urlencode($res));
 		exit;
-		return 'add';
 	}
 
 }
