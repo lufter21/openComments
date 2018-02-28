@@ -52,9 +52,9 @@ class Comment extends Core {
 
 		foreach ($comments as $val) {
 			if ($val['relation'] == null) {
-				$this->comments[$val['id']] = $val;
+				$this->comments[$val['id']]['comm'] = $val;
 			} else {
-				$this->comments[$val['relation']]['replay_comm'] = array();
+				$this->comments[$val['relation']]['replay'][$val['id']] = $val;
 			}
 		}
 

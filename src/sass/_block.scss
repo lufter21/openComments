@@ -39,6 +39,10 @@
 /*Comments*/
 .comments{
 	padding-right: 50px;
+	&__replay{
+		padding-left: 75px;
+		//display: none;
+	}
 }
 .comm{
 	position: relative;

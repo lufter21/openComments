@@ -947,6 +947,10 @@ a:hover {
   padding-right: 50px;
 }
 
+.comments__replay {
+  padding-left: 75px;
+}
+
 .comm {
   position: relative;
   min-height: 50px;
