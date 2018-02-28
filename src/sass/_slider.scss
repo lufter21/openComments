@@ -115,7 +115,7 @@
         height: 8px;
         border-radius: 8px;
         border: 1px solid $be;
-        transition: .5s;
+        transition: .21s;
         &:hover{
           background: $rd;
         }
@@ -139,7 +139,7 @@
     height: 42px;
     margin-top: -21px;
     font-size: 0;
-    transition: .5s;
+    transition: .21s;
     opacity: .3;
     &:after{
       display: inline-block;

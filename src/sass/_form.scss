@@ -50,7 +50,7 @@
 		display: block;
 		width: 100%;
 		border: 1px solid $gy;
-		transition: .5s;
+		transition: .21s;
 		&:hover,
 		&:focus{
 			box-shadow: 2px 1px 21px rgba(0,0,0,.21);
@@ -147,7 +147,7 @@
 			width: 100%;
 			text-decoration: none;
 			text-align: left;
-			transition: .5s;
+			transition: .21s;
 			&:hover{
 				background: $gy;
 				color: #fff;
@@ -220,7 +220,7 @@
 	}
 
 	&__fieldset{
-		transition: .5s;
+		transition: .21s;
 		position: static;
 		&_hidden{
 			opacity: 0;
@@ -273,7 +273,7 @@
 				height: 20px;
 				border: 1px solid #C3C3C3;
 				background: #F0F1F2;
-				transition: border-color .5s;
+				transition: border-color .21s;
 			}
 			&:hover:before{
 				border: 1px solid $rd;
@@ -324,7 +324,7 @@
 				border-radius: 20px;
 				border: 1px solid #C3C3C3;
 				background: #F0F1F2;
-				transition: border-color .5s;
+				transition: border-color .21s;
 			}
 			&:hover:before{
 				border: 1px solid $rd;
@@ -375,7 +375,7 @@
 		right: 0;
 		top: 0;
 		z-index: 3;
-		transition: .5s;
+		transition: .21s;
 		&:before{
 			@include ab;
 			position: absolute;

@@ -6,11 +6,15 @@
 	border-radius: 3px;
 	visibility: hidden;
 	opacity: 0;
-	transition: opacity .5s;
+	transition: opacity .21s;
 	&.toggled{
 		visibility: visible;
 		opacity: 1;
 	}
+}
+
+.link{
+	color: $be;
 }
 
 .ta-c{
@@ -28,14 +32,23 @@
 	color: $rd;
 }
 
+.mb-45{
+	margin-bottom: 45px;
+}
 .mb-35{
 	margin-bottom: 35px;
 }
 .mb-15{
 	margin-bottom: 15px;
 }
+.mb-10{
+	margin-bottom: 10px;
+}
 .m-0{
 	margin: 0 !important;
+}
+.hide{
+	display: none;
 }
 
 @media(min-width: 1201px){

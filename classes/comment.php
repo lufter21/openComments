@@ -44,10 +44,22 @@ class Comment extends Core {
 	}
 
 	private function getComments() {
-			$comm_sql = $this->_db->prepare('SELECT * FROM comments WHERE resource_id=?');
-			$comm_sql->execute(array($this->resource['id']));
-			$comments = $comm_sql->fetchAll(PDO::FETCH_ASSOC);
-			$this->comments = $comments;
+		$comm_sql = $this->_db->prepare('SELECT * FROM comments WHERE resource_id=? ORDER BY time DESC');
+		$comm_sql->execute(array($this->resource['id']));
+		$comments = $comm_sql->fetchAll(PDO::FETCH_ASSOC);
+
+		$this->comments = array();
+
+		foreach ($comments as $val) {
+			if ($val['relation'] == null) {
+				$this->comments[$val['id']] = $val;
+			} else {
+				$this->comments[$val['relation']]['replay_comm'] = array();
+			}
+		}
+
+		print_r($this->comments);
+
 	}
 
 	private function addResource($res) {

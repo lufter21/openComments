@@ -48,7 +48,7 @@
 				overflow: auto;
 				background: #FFF;
 				border-top: 1px solid $gy;
-				transition: .5s;
+				transition: .21s;
 				&.toggled{
 					visibility: visible;
 					opacity: 1;
@@ -69,7 +69,7 @@
 .menu{
 	@include clr;
 	list-style: none;
-	padding-top: 12px;
+	padding-top: 11px;
 	&__item{
 		float: left;
 		margin-left: 45px;
@@ -82,7 +82,7 @@
 	}
 	&__a{
 		text-decoration: none;
-		transition: .5s;
+		transition: .21s;
 		&:hover{
 			color: $rd;
 		}
@@ -120,7 +120,7 @@
 			font-weight: 300;
 			text-decoration: none;
 			display: inline-block;
-			transition: .5s;
+			transition: .21s;
 			&:hover{
 				color: $rd;
 			}
@@ -189,9 +189,40 @@
 		text-align: right;
 	}
 	&__bubble{
-		width: 250px;
+		width: 310px;
 		top: 45px;
 		right: 0;
 		padding: 25px;
+		font-size: 1rem;
+		&-btn{
+			font-size: 14px;
+			color: $be;
+			border-bottom: 1px dashed $be;
+			margin-top: 20px;
+			transition: .21s;
+			&:hover{
+				border-color: transparent;
+			}
+		}
+	}
+	&__auth-msg{
+		font-size: 14px;
+		color: $rd;
+	}
+	&__btn{
+		font-size: 14px;
+		color: $be;
+		border-bottom: 1px dashed $be;
+		transition: .21s;
+		text-decoration: none;
+		display: inline-block;
+		vertical-align: middle;
+		&:hover{
+			border-color: transparent !important;
+		}
+		&.toggled{
+			color: $rd;
+			border-color: $rd;
+		}
 	}
 }

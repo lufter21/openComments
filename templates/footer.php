@@ -76,6 +76,7 @@
 <script src="/js/popup.js"></script>
 <script src="/js/button.js"></script>
 <script src="/js/form.js"></script>
+<script src="/js/auth.js"></script>
 <script src="/js/common.js"></script>
 
 </body>

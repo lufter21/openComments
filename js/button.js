@@ -91,4 +91,10 @@ $(document).ready(function() {
 		return false;
 	});
 
+	$('body').click(function(e) {
+		if (!$(e.target).closest('.user').length) {
+			$('#user-menu, .js-toggle[data-target-elements="#user-menu"]').removeClass('toggled');
+		}
+	});
+
 });

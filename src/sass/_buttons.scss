@@ -9,7 +9,7 @@
 	border: 1px solid #fff;
 	text-transform: uppercase;
 	text-decoration: none;
-	transition: .5s;
+	transition: .21s;
 	&_arr{
 		&:after{
 			display: inline-block;
@@ -107,7 +107,7 @@
 		position: absolute;
 		left: 0;
 		width: 100%;
-		transition: .5s;
+		transition: .21s;
 	}
 
 	span:first-child{
@@ -173,7 +173,7 @@
 		left: -15%;
 		top: 50%;
 		margin-top: -1px;
-		transition: .5s;
+		transition: .21s;
 	}
 	&:after{
 		transform: rotate(-45deg);
@@ -206,7 +206,7 @@
 	height: 64px;
 	border-radius: 64px;
 	background: $rd;
-	transition: .5s;
+	transition: .21s;
 	&:before{
 		@include ab;
 		position: absolute;

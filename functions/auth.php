@@ -1,12 +1,11 @@
 <?php 
-require_once ('../classes/DbConect.php');
-require_once ('../functions/country-code.php');
+require_once $_SERVER['DOCUMENT_ROOT'].'/classes/dbconnect.php';
 
 session_start();
 
 function do_login($user_data, $password = ""){
 
-	$db = DbConect::getInstance();
+	$db = DbConnect::getInstance();
 	$db = $db->getDb();
 
 	$identity = md5($user_data['identity']);
@@ -22,19 +21,10 @@ function do_login($user_data, $password = ""){
 	}
 
 	if($user_data['password'] === $current_password){
-
 		$access_key = $identity.sha1(mt_rand());
-
 		$set_access_key = $db->prepare('UPDATE users SET access_key=? WHERE identity=?');
 		$set_access_key->execute(array($access_key, $identity));
-
-		$user_info = array(
-			'user_id'=>$user_data['id'],
-			'name'=>$user_data['name'],
-			'country'=>$user_data['country'],
-			);
 		$_SESSION['access'] = $access_key;
-		$_SESSION['region'] = $user_data['country'];
 		SetCookie('access', $access_key, time()+3600*24, '/');
 		return "login";
 	} else {
@@ -46,7 +36,7 @@ function do_login($user_data, $password = ""){
 
 function do_registr($user_data, $password = ""){
 
-	$db = DbConect::getInstance();
+	$db = DbConnect::getInstance();
 	$db = $db->getDb();
 
 	$identity = md5($user_data['identity']);
@@ -58,7 +48,7 @@ function do_registr($user_data, $password = ""){
 		$user_data['password'] = md5($identity.$user_data['seed']);
 	}
 	
-	$ins_users = $db->prepare('INSERT INTO users (identity,network,name,email,password,seed,registration_date,activity,country) VALUES (:identity,:network,:name,:email,:password,:seed,:registration_date,:activity,:country)');
+	$ins_users = $db->prepare('INSERT INTO users (identity,network,name,email,password,seed) VALUES (:identity,:network,:name,:email,:password,:seed)');
 
 	$ins_users->execute(array(
 		'identity'=>$identity,
@@ -66,10 +56,7 @@ function do_registr($user_data, $password = ""){
 		'name'=>$user_data['name'],
 		'email'=>$user_data['email'],
 		'password'=>$user_data['password'],
-		'seed'=>$user_data['seed'],
-		'registration_date'=>date('Y-m-d'),
-		'activity'=>date('Y-m-d'),
-		'country'=>country_code($user_data['country'])
+		'seed'=>$user_data['seed']
 		));
 
 	$result = do_login($user_data, $password);
@@ -100,7 +87,7 @@ $response = array();
 /*formLoginReg*/
 if(isset($_POST['form_role'])){
 
-	$db = DbConect::getInstance();
+	$db = DbConnect::getInstance();
 	$db = $db->getDb();
 
 	$sql_users = $db->prepare('SELECT * FROM users WHERE email=?');
@@ -120,7 +107,7 @@ if(isset($_POST['form_role'])){
 
 			$msg = do_login($user_data, $_POST['pass_l']);
 
-			$response['msg'] = ($msg == 'error') ? 'Не верный e-mail или пароль.' : $msg;
+			$response['msg'] = ($msg == 'error') ? 'Неверный e-mail или пароль.' : $msg;
 
 		}
 
@@ -157,7 +144,7 @@ if (isset($_POST['token'])){
 	$user_data = file_get_contents('https://ulogin.ru/token.php?token='.$_POST['token'].'&host=https://bombonus.dealersair.com');
 	$user_data = $user_data ? json_decode($user_data, true) : array();
 
-	$db = DbConect::getInstance();
+	$db = DbConnect::getInstance();
 	$db = $db->getDb();
 
 	$sql_users = $db->prepare('SELECT * FROM users WHERE identity=?');
