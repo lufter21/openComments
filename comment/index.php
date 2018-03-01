@@ -98,11 +98,9 @@ require $_SERVER['DOCUMENT_ROOT'].'/templates/header.php';
 						</div>
 					</div>
 
-					<?php if (!empty($val['replay'])) { ?>
+					<div class="comments__replay">
 
-					<div id="replay-comments-container" class="comments__replay">
-
-						<?php foreach ($val['replay'] as $repl_key => $repl_val) { ?>
+						<?php if (!empty($val['replay'])) { foreach ($val['replay'] as $repl_key => $repl_val) { ?>
 
 						<div class="comm">
 							<div class="comm__thumb">
@@ -149,11 +147,9 @@ require $_SERVER['DOCUMENT_ROOT'].'/templates/header.php';
 							</div>
 						</div>
 
-						<?php } ?>
+						<?php } } ?>
 
 					</div>
-
-					<?php } ?>
 
 					<?php } } ?>
 

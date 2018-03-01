@@ -19,6 +19,7 @@ class Comment extends Core {
 				$this->getIframe();
 				$this->getComments();
 				$this->getMeta();
+				//$this->parse(urldecode($res));
 			} else {
 				$this->addResource($res);
 			}
@@ -63,13 +64,42 @@ class Comment extends Core {
 	}
 
 	private function addResource($res) {
+		$url = urldecode($res);
 		$ins_res = $this->_db->prepare('INSERT INTO resources (url,title) VALUES (:url,:title)');
 		$ins_res->execute(array(
-		'url'=>urldecode($res),
-		'title'=>''
+		'url'=>$url,
+		'title'=>$this->parse($url)
 		));
 		header('Location: /comment?r='.urlencode($res));
 		exit;
+	}
+
+	private function parse($url) {
+
+		$title = '';
+		
+		$ch = curl_init($url);
+
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
+		$html = curl_exec($ch);
+		
+		curl_close($ch);
+
+		if (strpos($url, 'youtube') !== false) {
+			preg_match('/<.*?eow-title.*?>(.*?)<\/.*?>/is', $html, $matches);
+			$title = $matches[1];
+		} else {
+			preg_match('/<.*?title.*?>(.*?)<\/.*?>/is', $html, $matches);
+			$title = $matches[1];
+		}
+
+		$title = trim(str_replace(array("\r\n", "\n", "\r"), '', $title), ' ');
+
+		return $title;
 	}
 
 }

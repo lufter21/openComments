@@ -85,8 +85,13 @@ $(document).ready(function(){
 			dataType:"html",
 			data: $f.serialize(),
 			success: function(response){
-				$('#replay-comments-container').append(response);
+				if ($f.closest('.comments__replay').length) {
+					$f.closest('.comments__replay').append(response);
+				} else {
+					$f.closest('.comm').next('.comments__replay').append(response);
+				}
 				callback(true, true);
+				$('.comm__replay-btn[data-target-id="'+ $f.attr('id') +'"]').click();
 			},
 			error: function() {
 				alert('Send Error');
