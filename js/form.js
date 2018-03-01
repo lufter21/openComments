@@ -550,6 +550,14 @@ var Form = {
 			Button.prop('disabled', true).addClass('form__button_loading');
 		}
 	},
+	clearForm: function(f, st) {
+		var Form = $(f);
+		if (st) {
+			Form.find('.form__text-input, .form__textarea').val('');
+			Form.find('.overlabel-apply').attr('style','');
+			Form.find('.form__textarea-mirror').html('');
+		}
+	},
 	submit: function(el, form) {
 		var _ = this;
 		$('body').on('change', '.form__file-input', function(e) {
@@ -563,8 +571,9 @@ var Form = {
 			if (_.validate(f)) {
 				_.submitButton(f, false);
 				if (form !== undefined) {
-					form(f, function(ret) {
-						_.submitButton(f, ret);
+					form(f, function(unlockBtn, clearForm) {
+						_.submitButton(f, unlockBtn);
+						_.clearForm(f, clearForm);
 					});
 				} else {
 					return true;
@@ -668,60 +677,5 @@ $(document).ready(function() {
 	$('body').on('input', '.form__textarea_var-h', function() {
 		setTextareaHeight($(this));
 	});
-
-	Form.submit('#form1', function(form, callback) {
-		var $f = $(form);
-		Popup.message('#message-popup', 'Форма отправлена', function() {
-			callback(true);
-		});
-		/*$.ajax({
-			url: $f.attr('action'),
-			type:"POST",
-			dataType:"html",
-			data: $f.serialize(), //new FormData(form),
-			success: function(response){
-				Popup.message('#message-popup', response);
-				callback(true);
-			},
-			error: function() {
-				alert('Send Error');
-			}
-		});*/
-		
-	});
-
-	Form.submit('#comment-form', function(form, callback) {
-		var $f = $(form);
-		$.ajax({
-			url: $f.attr('action'),
-			type:"POST",
-			dataType:"html",
-			data: $f.serialize(),
-			success: function(response){
-				callback(true);
-			},
-			error: function() {
-				alert('Send Error');
-			}
-		});
-	});
-
-	Form.submit('.js-replay-form', function(form, callback) {
-		var $f = $(form);
-		$.ajax({
-			url: $f.attr('action'),
-			type:"POST",
-			dataType:"html",
-			data: $f.serialize(),
-			success: function(response){
-				callback(true);
-			},
-			error: function() {
-				alert('Send Error');
-			}
-		});
-	});
-
-	Form.submit('#form3');
 
 });

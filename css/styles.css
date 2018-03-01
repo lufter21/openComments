@@ -965,8 +965,17 @@ a:hover {
   height: 50px;
 }
 
+.comments__replay .comm__thumb {
+  width: 30px;
+  height: 30px;
+}
+
 .comm__cont {
   padding-left: 75px;
+}
+
+.comments__replay .comm__cont {
+  padding-left: 50px;
 }
 
 .comm__name {
@@ -2423,7 +2432,7 @@ body.is-popup-opened {
   position: relative;
 }
 
-.c-rd {
+.c-red {
   color: #ff0000;
 }
 

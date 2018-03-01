@@ -17,7 +17,9 @@ require $_SERVER['DOCUMENT_ROOT'].'/templates/header.php';
 
 			<div class="comments">
 
-				<form id="comment-form" action="/functions/comment.php" method="POST" class="form">
+				<?php if (!empty($get->user)) { ?>
+
+				<form id="comment-form" action="/functions/add-comment.php" method="POST" class="form">
 					<input type="hidden" name="resource_id" value="<?php echo $get->resource['id']; ?>">
 					<div class="form__field">
 						<div class="pos-r">
@@ -35,79 +37,93 @@ require $_SERVER['DOCUMENT_ROOT'].'/templates/header.php';
 
 				</form>
 
-				<?php if (!empty($get->comments)) { foreach ($get->comments as $key => $val) { ?>
+				<?php } else { ?>
 
-				<div class="comm">
-					<div class="comm__thumb">
-						<img src="<?php echo (!empty($val['comm']['user_avatar'])) ? $val['comm']['user_avatar'] : '/images/avatar.png'; ?>" alt="avatar" class="cover-img">
-					</div>
-					<div class="comm__cont">
-						<div class="comm__name">
-							<?php echo $val['comm']['user_name']; ?> <span class="comm__time"><?php echo $val['comm']['time']; ?></span>
-						</div>
-						<div class="comm__txt">
-							<?php echo $val['comm']['text']; ?>
-						</div>
-
-						<div>
-							<button class="js-toggle comm__replay-btn" data-target-id="replay-form-<?php echo $val['comm']['id']; ?>" data-second-button-text="Отмена">Ответить</button>
-						</div>
-
-						<form id="replay-form-<?php echo $val['comm']['id']; ?>" action="/functions/comment.php" method="POST" class="comm__form js-replay-form form hide on-toggled-show">
-
-							<input type="hidden" name="resource_id" value="<?php echo $get->resource['id']; ?>">
-							<input type="hidden" name="relation" value="<?php echo $val['comm']['id']; ?>">
-
-							<div class="row">
-								<div class="col pad-0">
-									<div class="form__field">
-										<div class="pos-r">
-											<div class="form__textarea-mirror"></div>
-											<textarea name="comment" data-required="true" class="form__textarea form__textarea_var-h"></textarea>
-											<label class="overlabel">Добавьте ответ</label>
-										</div>
-										<div class="form__error-tip">Заполните поле</div>
-									</div>
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="col-right pad-0">
-									<button type="submit" class="button button_red">Отправить</button>
-								</div>
-							</div>
-
-						</form>
-
-					</div>
+				<div class="txt c-red">
+					Чтоб оставить комментарий войдите в свой аккаунт.
 				</div>
 
-				<?php if (!empty($val['replay'])) { ?>
+				<?php } ?>
 
-					<div class="comments__replay">
+				<div id="comments-container">
 
-						<?php foreach ($val['replay'] as $key => $val) { ?>
+					<?php if (!empty($get->comments)) { foreach ($get->comments as $key => $val) { ?>
+
+					<div class="comm">
+						<div class="comm__thumb">
+							<img src="<?php echo (!empty($val['comm']['user_avatar'])) ? $val['comm']['user_avatar'] : '/images/avatar.png'; ?>" alt="avatar" class="cover-img">
+						</div>
+						<div class="comm__cont">
+							<div class="comm__name">
+								<?php echo $val['comm']['user_name']; ?> <span class="comm__time"><?php echo $val['comm']['time']; ?></span>
+							</div>
+							<div class="comm__txt">
+								<?php echo nl2br($val['comm']['text']); ?>
+							</div>
+
+							<?php if ($get->user['user_id'] != $val['comm']['user_id']) { ?>
+
+							<div>
+								<button class="js-toggle comm__replay-btn" data-target-id="replay-form-<?php echo $key; ?>" data-second-button-text="Отмена">Ответить</button>
+							</div>
+
+							<form id="replay-form-<?php echo $key; ?>" action="/functions/add-comment.php" method="POST" class="comm__form js-replay-form form hide on-toggled-show">
+
+								<input type="hidden" name="resource_id" value="<?php echo $get->resource['id']; ?>">
+								<input type="hidden" name="relation" value="<?php echo $val['comm']['id']; ?>">
+
+								<div class="row">
+									<div class="col pad-0">
+										<div class="form__field">
+											<div class="pos-r">
+												<div class="form__textarea-mirror"></div>
+												<textarea name="comment" data-required="true" class="form__textarea form__textarea_var-h"></textarea>
+												<label class="overlabel">Добавьте ответ</label>
+											</div>
+											<div class="form__error-tip">Заполните поле</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-right pad-0">
+										<button type="submit" class="button button_red">Отправить</button>
+									</div>
+								</div>
+
+							</form>
+
+							<?php } ?>
+
+						</div>
+					</div>
+
+					<?php if (!empty($val['replay'])) { ?>
+
+					<div id="replay-comments-container" class="comments__replay">
+
+						<?php foreach ($val['replay'] as $repl_key => $repl_val) { ?>
 
 						<div class="comm">
 							<div class="comm__thumb">
-								<img src="<?php echo (!empty($val['user_avatar'])) ? $val['user_avatar'] : '/images/avatar.png'; ?>" alt="avatar" class="cover-img">
+								<img src="<?php echo (!empty($repl_val['user_avatar'])) ? $repl_val['user_avatar'] : '/images/avatar.png'; ?>" alt="avatar" class="cover-img">
 							</div>
 							<div class="comm__cont">
 								<div class="comm__name">
-									<?php echo $val['user_name']; ?> <span class="comm__time"><?php echo $val['time']; ?></span>
+									<?php echo $repl_val['user_name']; ?> <span class="comm__time"><?php echo $repl_val['time']; ?></span>
 								</div>
 								<div class="comm__txt">
-									<?php echo $val['text']; ?>
+									<?php echo $repl_val['text']; ?>
 								</div>
 
 								<div>
-									<button class="js-toggle comm__replay-btn" data-target-id="replay-form-<?php echo $val['id']; ?>" data-second-button-text="Отмена">Ответить</button>
+									<button class="js-toggle comm__replay-btn" data-target-id="replay-form-<?php echo $key.'-'.$repl_key; ?>" data-second-button-text="Отмена">Ответить</button>
 								</div>
 
-								<form id="replay-form-<?php echo $val['id']; ?>" action="/functions/comment.php" method="POST" class="comm__form js-replay-form form hide on-toggled-show">
+								<form id="replay-form-<?php echo $key.'-'.$repl_key; ?>" action="/functions/add-comment.php" method="POST" class="comm__form js-replay-form form hide on-toggled-show">
 
 									<input type="hidden" name="resource_id" value="<?php echo $get->resource['id']; ?>">
-									<input type="hidden" name="relation" value="<?php echo $val['id']; ?>">
+									<input type="hidden" name="relation" value="<?php echo $val['comm']['id']; ?>">
 
 									<div class="row">
 										<div class="col pad-0">
@@ -137,9 +153,11 @@ require $_SERVER['DOCUMENT_ROOT'].'/templates/header.php';
 
 					</div>
 
-				<?php } ?>
+					<?php } ?>
 
-				<?php } } ?>
+					<?php } } ?>
+
+				</div>
 
 			</div>
 

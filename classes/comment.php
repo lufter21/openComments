@@ -44,21 +44,21 @@ class Comment extends Core {
 	}
 
 	private function getComments() {
-		$comm_sql = $this->_db->prepare('SELECT * FROM comments WHERE resource_id=? ORDER BY time DESC');
+		$comm_sql = $this->_db->prepare('SELECT * FROM comments WHERE resource_id=? ORDER BY time');
 		$comm_sql->execute(array($this->resource['id']));
 		$comments = $comm_sql->fetchAll(PDO::FETCH_ASSOC);
 
-		$this->comments = array();
+		$comm_arr = array();
 
 		foreach ($comments as $val) {
 			if ($val['relation'] == null) {
-				$this->comments[$val['id']]['comm'] = $val;
+				$comm_arr[$val['id']]['comm'] = $val;
 			} else {
-				$this->comments[$val['relation']]['replay'][$val['id']] = $val;
+				$comm_arr[$val['relation']]['replay'][$val['id']] = $val;
 			}
 		}
 
-		print_r($this->comments);
+		$this->comments = array_reverse($comm_arr);
 
 	}
 
