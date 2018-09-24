@@ -48,11 +48,12 @@ function do_registr($user_data, $password = ""){
 		$user_data['password'] = md5($identity.$user_data['seed']);
 	}
 	
-	$ins_users = $db->prepare('INSERT INTO users (identity,network,name,email,password,seed) VALUES (:identity,:network,:name,:email,:password,:seed)');
+	$ins_users = $db->prepare('INSERT INTO users (identity,network,avatar,name,email,password,seed) VALUES (:identity,:network,:avatar,:name,:email,:password,:seed)');
 
 	$ins_users->execute(array(
 		'identity'=>$identity,
 		'network'=>$user_data['network'],
+		'avatar'=>$user_data['photo'],
 		'name'=>$user_data['name'],
 		'email'=>$user_data['email'],
 		'password'=>$user_data['password'],
@@ -76,7 +77,9 @@ function get_message($value){
 		'mailru'=>'MailRU'
 		);
 	
-	$msg = 'Вы входили ранее через аккаунт '.str_replace(array_keys($network), array_values($network), $value).'. Попробуйте авторизироваться используя соответствующую кнопку.';
+	/*$msg = 'Вы входили ранее через аккаунт '.str_replace(array_keys($network), array_values($network), $value).'. Попробуйте авторизироваться используя соответствующую кнопку.';*/
+
+	$msg = 'Вы входили ранее через аккаунт <i class="tt-u">'.$value.'</i>. Попробуйте авторизироваться используя соответствующую кнопку.';
 
 	return $msg; 
 }
@@ -141,7 +144,7 @@ if(isset($_POST['form_role'])){
 
 /*checkUser*/
 if (isset($_POST['token'])){
-	$user_data = file_get_contents('https://ulogin.ru/token.php?token='.$_POST['token'].'&host=https://bombonus.dealersair.com');
+	$user_data = file_get_contents('https://ulogin.ru/token.php?token='.$_POST['token'].'&host=https://opencomments.dealersair.com');
 	$user_data = $user_data ? json_decode($user_data, true) : array();
 
 	$db = DbConnect::getInstance();

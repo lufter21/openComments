@@ -22,6 +22,10 @@ b, strong {
   font-weight: 700;
 }
 
+i {
+  font-style: italic;
+}
+
 header, footer, section, nav, article, aside {
   display: block;
 }
@@ -711,7 +715,7 @@ a:hover {
 /*Menu*/
 .menu {
   list-style: none;
-  padding-top: 11px;
+  padding-top: 16px;
 }
 
 .menu:after {
@@ -833,14 +837,14 @@ a:hover {
 
 /*User*/
 .user {
-  height: 34px;
+  height: 45px;
   position: relative;
 }
 
 .user__thumb {
   display: inline-block;
-  width: 34px;
-  height: 34px;
+  width: 45px;
+  height: 45px;
   vertical-align: middle;
   overflow: hidden;
 }
@@ -863,10 +867,10 @@ a:hover {
 }
 
 .user__bubble-btn {
-  font-size: 14px;
+  font-size: 16px;
   color: #0000ff;
   border-bottom: 1px dashed #0000ff;
-  margin-top: 20px;
+  margin-top: 24px;
   transition: .21s;
 }
 
@@ -877,6 +881,11 @@ a:hover {
 .user__auth-msg {
   font-size: 14px;
   color: #ff0000;
+}
+
+.user__auth-msg span {
+  display: inline-block;
+  margin-bottom: 20px;
 }
 
 .user__btn {
@@ -1553,6 +1562,20 @@ a:hover {
   animation: form_loading_icon .9s infinite linear;
 }
 
+.form__link {
+  display: inline-block;
+  font-size: 14px;
+  border-bottom: 1px dashed #0000ff;
+  margin-top: 20px;
+  transition: .21s;
+  text-decoration: none;
+  margin-left: 15px;
+}
+
+.form__link:hover {
+  border-color: transparent;
+}
+
 .form__txt {
   font-size: 14px;
   font-weight: 500;
@@ -1901,6 +1924,14 @@ a:hover {
   cursor: pointer;
 }
 
+.popup__tit {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 28px;
+  text-transform: uppercase;
+  text-align: center;
+}
+
 /*fix body*/
 body.is-popup-opened {
   position: fixed;
@@ -2068,6 +2099,11 @@ body.is-popup-opened {
 /*rules*/
 .p-rules {
   max-width: 1000px;
+}
+
+/*forms*/
+.form-popup {
+  max-width: 350px;
 }
 
 /*===ACCORD===*/
@@ -2381,22 +2417,31 @@ body.is-popup-opened {
   bottom: 0;
   left: 0;
   width: 100%;
+  padding: 18px 0 10px;
+  font-size: 14px;
 }
 
-.footer__wrap {
-  height: 100px;
-  max-width: none;
+.footer .left {
+  float: left;
 }
 
-.footer__logo img {
+.footer .right {
+  float: right;
+}
+
+.footer .wrap:after {
+  display: block;
   width: 100%;
-  max-width: 221px;
+  content: "";
+  clear: both;
 }
 
-.footer__txt {
-  text-align: right;
-  font-size: 15px;
-  line-height: 1.2;
+.dealersair img {
+  position: relative;
+  top: -5px;
+  width: 100%;
+  max-width: 84px;
+  height: auto;
 }
 
 /*===CLASSES===*/
@@ -2428,12 +2473,20 @@ body.is-popup-opened {
   text-align: right;
 }
 
+.tt-u {
+  text-transform: uppercase;
+}
+
 .pos-r {
   position: relative;
 }
 
 .c-red {
   color: #ff0000;
+}
+
+.mt-25 {
+  margin-top: 25px !important;
 }
 
 .mb-45 {

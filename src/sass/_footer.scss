@@ -7,28 +7,27 @@
 	bottom: 0;
 	left: 0;
 	width: 100%;
-	&__wrap{
-		height: 100px;
-		max-width: none;
+	padding: 18px 0 10px;
+	font-size: 14px;
+	.left{
+		float: left;
 	}
-	&__logo{
-		img{
-			width: 100%;
-			max-width: 221px;
-		}
+	.right{
+		float: right;
 	}
-	&__txt{
-		text-align: right;
-		font-size: 15px;
-		line-height: (18/15);
+	.wrap{
+		@include clr;
 	}
+}
+
+.dealersair img{
+	position:relative;
+	top:-5px;
+	width: 100%;
+	max-width: 84px;
+	height: auto;
+}
+
+@media(max-width: 1000px){
 	
-	@media(max-width: 1600px){
-		
-	}
-
-	@media(max-width: 1200px){
-		
-	}
-
 }

@@ -49,6 +49,13 @@
 		z-index:3;
 		cursor:pointer;
 	}
+	&__tit{
+		font-size: 22px;
+		font-weight: 700;
+		margin-bottom: 28px;
+		text-transform: uppercase;
+		text-align: center;
+	}
 }
 
 /*fix body*/
@@ -205,4 +212,9 @@ body.is-popup-opened{
 /*rules*/
 .p-rules{
 	max-width: 1000px;
+}
+
+/*forms*/
+.form-popup{
+	max-width: 350px;
 }

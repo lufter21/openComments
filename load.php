@@ -10,7 +10,6 @@ function loadClasses($class_name) {
     if (file_exists($_SERVER['DOCUMENT_ROOT'].'/classes/'.$class_name.'.php')) {
         require_once $_SERVER['DOCUMENT_ROOT'].'/classes/'.$class_name.'.php';
     }
-    //echo $class_name;
 }
 
 spl_autoload_register('loadClasses');

@@ -61,7 +61,7 @@ require $_SERVER['DOCUMENT_ROOT'].'/templates/header.php';
 								<?php echo nl2br($val['comm']['text']); ?>
 							</div>
 
-							<?php if ($get->user['user_id'] != $val['comm']['user_id']) { ?>
+							<?php if (!empty($get->user) && ($get->user['user_id'] != $val['comm']['user_id'])) { ?>
 
 							<div>
 								<button class="js-toggle comm__replay-btn" data-target-id="replay-form-<?php echo $key; ?>" data-second-button-text="Отмена">Ответить</button>
@@ -113,10 +113,12 @@ require $_SERVER['DOCUMENT_ROOT'].'/templates/header.php';
 								<div class="comm__txt">
 									<?php echo $repl_val['text']; ?>
 								</div>
-
+								
+								<?php if (!empty($get->user)) { ?>
 								<div>
 									<button class="js-toggle comm__replay-btn" data-target-id="replay-form-<?php echo $key.'-'.$repl_key; ?>" data-second-button-text="Отмена">Ответить</button>
 								</div>
+								<?php } ?>
 
 								<form id="replay-form-<?php echo $key.'-'.$repl_key; ?>" action="/functions/add-comment.php" method="POST" class="comm__form js-replay-form form hide on-toggled-show">
 

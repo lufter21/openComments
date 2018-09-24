@@ -1,10 +1,12 @@
 <!--FOOTER/-->
-<footer class="footer">
-	<div class="row wrap footer__wrap">
-		
+<footer id="footer" class="footer">
+	<div class="wrap">
+		<div class="left">&copy; <span>openComments.dealersAir, <?php echo date('Y');?>. Территория свободных комментариев.</span></div>
+		<div class="right">
+			<a class="dealersair" href="http://dealersair.com/" title="«dealersAir» — интернет-проекты и сервисы" target="_blank"><img src="/images/dealersair.svg" alt="dealersAir"></a>
+		</div>
 	</div>
 </footer>
-
 <!--/FOOTER-->
 
 </div>
@@ -54,6 +56,23 @@
 					</div>
 				</div>
 			</div>
+		</div>
+	</div>
+
+	<div id="password-recovery" class="form-popup popup__window">
+		<button class="popup__close btn-close"></button>
+		<div class="popup__inner">
+			<div class="popup__tit">Восстановление пароля</div>
+			<form id="pass-recovery-form" action="/functions/send.php" method="POST" class="form">
+				<div class="form__field">
+					<label class="overlabel">E-mail</label>
+					<input type="text" name="email" data-type="email" data-required="true" class="form__text-input" value="">
+					<div class="form__error-tip" data-second-error-text="Некорректный E-mail">Введите E-mail</div>
+				</div>
+				<div class="ta-c mt-25">
+					<button type="submit" class="button button_red">Восстановить</button>
+				</div>
+			</form>
 		</div>
 	</div>
 

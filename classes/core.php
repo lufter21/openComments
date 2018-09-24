@@ -45,7 +45,8 @@ abstract class Core {
 				if ($user_data) {
 					$user_info = array(
 						'user_id'=>$user_data['id'],
-						'name'=>$user_data['name']
+						'name'=>$user_data['name'],
+						'avatar'=>$user_data['avatar']
 					);
 				}
 

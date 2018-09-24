@@ -24,12 +24,20 @@
 	text-align: right;
 }
 
+.tt-u{
+	text-transform: uppercase;
+}
+
 .pos-r{
 	position: relative;
 }
 
 .c-red{
 	color: $rd;
+}
+
+.mt-25{
+	margin-top: 25px !important;
 }
 
 .mb-45{

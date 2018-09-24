@@ -19,7 +19,6 @@ class Comment extends Core {
 				$this->getIframe();
 				$this->getComments();
 				$this->getMeta();
-				//$this->parse(urldecode($res));
 			} else {
 				$this->addResource($res);
 			}

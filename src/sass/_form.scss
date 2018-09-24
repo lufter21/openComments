@@ -420,6 +420,19 @@
 		}
 	}
 
+	&__link{
+		display: inline-block;
+		font-size: 14px;
+		border-bottom: 1px dashed $be;
+		margin-top: 20px;
+		transition: .21s;
+		text-decoration: none;
+		margin-left: 15px;
+		&:hover{
+			border-color: transparent;
+		}
+	}
+
 	&__txt{
 		font-size: 14px;
 		font-weight: 500;

@@ -41,7 +41,7 @@
 								<?php echo $get->user['name']; ?>
 							</span>
 							<span class="user__thumb">
-								<img src="../../images/avatar.png" alt="avatar" class="cover-img">
+								<img src="<?php echo $get->user['avatar']; ?>" alt="avatar" class="cover-img">
 							</span>
 						</a>
 
@@ -61,7 +61,10 @@
 
 							<div id="js_auth_msg" class="user__auth-msg"></div>
 
-							<div class="user__login on-toggled-hide">
+							<div id="uLogin0484816c" data-ulogin="display=panel;fields=first_name,last_name,email,photo;theme=flat;providers=vkontakte,odnoklassniki,facebook,youtube,google,mailru,twitter,yandex,livejournal,openid,lastfm,linkedin,liveid,soundcloud,steam,flickr,uid,webmoney,foursquare,tumblr,googleplus,vimeo,instagram,wargaming;redirect_uri=;callback=socAuth"></div>
+							<script src="https://ulogin.ru/js/ulogin.js"></script>
+
+							<!--<div class="user__login on-toggled-hide">
 								<form id="login-form" action="/functions/auth.php" method="POST" class="form">
 									<input type="hidden" name="form_role" value="log">
 									<div class="form__field">
@@ -75,6 +78,7 @@
 										<div class="form__error-tip">Введите пароль</div>
 									</div>
 									<button type="submit" class="button button_red">Войти</button>
+									<a href="#password-recovery" class="js-open-popup form__link">Забыли пароль?</a>
 								</form>
 
 								<button class="js-toggle user__bubble-btn" data-target-elements=".user__login,.user__registration,.user__registration .js-toggle">Регистрация</button>
@@ -112,7 +116,7 @@
 								</form>
 
 								<button class="js-toggle user__bubble-btn" data-target-elements=".user__login,.user__registration,.user__login .js-toggle">Вход</button>
-							</div>
+							</div>-->
 							<?php } ?>
 
 						</div>
