@@ -19,6 +19,7 @@ require $_SERVER['DOCUMENT_ROOT'].'/templates/header.php';
 					</div>
 				</div>
 			</form>
+			<img src="/images/url-field.jpg" alt="img" class="url-img">
 		</div>
 	</div>
 </div>

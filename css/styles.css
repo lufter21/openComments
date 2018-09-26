@@ -652,7 +652,6 @@ a:hover {
 
 .header__wrap {
   height: 55px;
-  max-width: none;
 }
 
 .header__logo {
@@ -1024,13 +1023,7 @@ a:hover {
 /*iFrame*/
 .iframe-wrap {
   position: relative;
-}
-
-.iframe-wrap:before {
-  display: block;
-  content: "";
-  width: 100%;
-  padding-bottom: 56.25%;
+  height: 53vh;
 }
 
 .iframe-wrap iframe {
@@ -1098,6 +1091,13 @@ a:hover {
 .full-width-img {
   width: 100%;
   height: auto;
+}
+
+.url-img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 10px auto 0;
 }
 
 /*===FORM===*/
@@ -1500,7 +1500,7 @@ a:hover {
 .form__btn {
   display: block;
   height: 42px;
-  position: absolute;
+  position: absolute !important;
   right: 0;
   top: 0;
   z-index: 3;
@@ -1526,6 +1526,10 @@ a:hover {
   background-repeat: no-repeat;
   background-position: -33px -15px;
   margin: -9px 0 0 -8px;
+}
+
+.form__btn_search.form__button_loading:before {
+  background: none;
 }
 
 .form__btn:hover {

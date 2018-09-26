@@ -100,7 +100,7 @@
 /*iFrame*/
 .iframe-wrap{
 	position: relative;
-	@include fixprop(16,9);
+	height: 53vh;
 	iframe{
 		@include fwh;
 	}

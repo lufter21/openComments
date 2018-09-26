@@ -5,6 +5,8 @@ require $_SERVER['DOCUMENT_ROOT'].'/templates/header.php';
 ?>
 
 <div class="container wrap">
+
+	<?php if (!empty($get->resource)) { ?>
 	
 	<div class="head pad">
 		<h1 class="head__title"><?php echo $get->meta['h1']; ?></h1>
@@ -173,6 +175,14 @@ require $_SERVER['DOCUMENT_ROOT'].'/templates/header.php';
 		</div>
 
 	</div>
+
+	<?php } else { ?>
+
+		<div class="txt c-red">
+			Эту страницу еще не комментировали. Войдите в свой аккаунт или зарегистрируйтесь.
+		</div>
+
+	<?php } ?>
 
 </div>
 

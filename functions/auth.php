@@ -3,12 +3,22 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/classes/dbconnect.php';
 
 session_start();
 
-function do_login($user_data, $password = ""){
-
+function user_info_update($primary_user_data, $user_id) {
 	$db = DbConnect::getInstance();
 	$db = $db->getDb();
 
-	$identity = md5($user_data['identity']);
+	$update_user = $db->prepare('UPDATE users SET avatar=?, name=? WHERE id=?');
+	$update_user->execute(array($primary_user_data['photo'], $primary_user_data['first_name'].' '.$primary_user_data['last_name'], $user_id));
+
+	$update_comments = $db->prepare('UPDATE comments SET user_avatar=?, user_name=? WHERE user_id=?');
+	$update_comments->execute(array($primary_user_data['photo'], $primary_user_data['first_name'].' '.$primary_user_data['last_name'], $user_id));
+}
+
+function do_login($primary_user_data, $password = ""){
+	$db = DbConnect::getInstance();
+	$db = $db->getDb();
+
+	$identity = md5($primary_user_data['identity']);
 
 	$sql_users = $db->prepare('SELECT * FROM users WHERE identity=?');
 	$sql_users->execute(array($identity));
@@ -26,6 +36,11 @@ function do_login($user_data, $password = ""){
 		$set_access_key->execute(array($access_key, $identity));
 		$_SESSION['access'] = $access_key;
 		SetCookie('access', $access_key, time()+3600*24, '/');
+
+		if (($primary_user_data['photo'] != $user_data['avatar']) || ($primary_user_data['first_name'].' '.$primary_user_data['last_name'] != $user_data['name'])) {
+			user_info_update($primary_user_data, $user_data['id']);
+		}
+
 		return "login";
 	} else {
 		unset($_SESSION['access']);
@@ -33,9 +48,7 @@ function do_login($user_data, $password = ""){
 	}
 }
 
-
 function do_registr($user_data, $password = ""){
-
 	$db = DbConnect::getInstance();
 	$db = $db->getDb();
 
@@ -79,17 +92,15 @@ function get_message($value){
 	
 	/*$msg = 'Вы входили ранее через аккаунт '.str_replace(array_keys($network), array_values($network), $value).'. Попробуйте авторизироваться используя соответствующую кнопку.';*/
 
-	$msg = 'Вы входили ранее через аккаунт <i class="tt-u">'.$value.'</i>. Попробуйте авторизироваться используя соответствующую кнопку.';
+	$msg = 'Вы входили ранее через аккаунт <b class="tt-u">'.$value.'</b>. Попробуйте авторизироваться используя соответствующую кнопку.';
 
 	return $msg; 
 }
-
 
 $response = array();
 
 /*formLoginReg*/
 if(isset($_POST['form_role'])){
-
 	$db = DbConnect::getInstance();
 	$db = $db->getDb();
 
@@ -174,9 +185,7 @@ if (isset($_POST['token'])){
 		}
 
 	}
-
 }
 
 echo json_encode($response);
-
 ?>

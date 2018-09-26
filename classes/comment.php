@@ -10,7 +10,7 @@ class Comment extends Core {
 
 	private function getResource() {
 		if(!empty($_GET['r'])){
-			$res = trim(strip_tags($_GET['r']));
+			$res = $this->modUrl(trim(strip_tags($_GET['r'])));
 			$res_sql = $this->_db->prepare('SELECT * FROM resources WHERE url LIKE ?');
 			$res_sql->execute(array(urldecode('%'.$res.'%')));
 			$resource = $res_sql->fetch(PDO::FETCH_ASSOC);
@@ -19,7 +19,7 @@ class Comment extends Core {
 				$this->getIframe();
 				$this->getComments();
 				$this->getMeta();
-			} else {
+			} else if (!empty($this->user)) {
 				$this->addResource($res);
 			}
 		}
@@ -59,21 +59,31 @@ class Comment extends Core {
 		}
 
 		$this->comments = array_reverse($comm_arr);
-
 	}
 
 	private function addResource($res) {
 		$url = urldecode($res);
 		$ins_res = $this->_db->prepare('INSERT INTO resources (url,title) VALUES (:url,:title)');
 		$ins_res->execute(array(
-		'url'=>$url,
-		'title'=>$this->parse($url)
+			'url'=>$url,
+			'title'=>$this->parse($url)
 		));
 		header('Location: /comment?r='.urlencode($res));
 		exit;
 	}
 
+	private function modUrl($url) {
+		if (preg_match('/youtube.*?\?v=([\w\-]+)($|\&)/i', $url, $vid_id)) {
+			$url = 'https://www.youtube.com/watch?v='.$vid_id[1];
+		}
+		
+		return $url;
+	}
+
 	private function parse($url) {
+		if (strpos($url, 'vk.com') !== false) {
+			return $url;
+		}
 
 		$title = '';
 		

@@ -39,26 +39,7 @@ $(document).ready(function(){
 		_$.css({width: wd, top: ofsT, left: ofsL}).addClass('fix-block_fixed');
 	});
 
-	Form.submit('#form1', function(form, callback) {
-		var $f = $(form);
-		Popup.message('#message-popup', 'Форма отправлена', function() {
-			callback(true);
-		});
-		/*$.ajax({
-			url: $f.attr('action'),
-			type:"POST",
-			dataType:"html",
-			data: $f.serialize(), //new FormData(form),
-			success: function(response){
-				Popup.message('#message-popup', response);
-				callback(true);
-			},
-			error: function() {
-				alert('Send Error');
-			}
-		});*/
-		
-	});
+	Form.submit('#search-form');
 
 	Form.submit('#comment-form', function(form, callback) {
 		var $f = $(form);
