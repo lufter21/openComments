@@ -167,8 +167,8 @@
 	&:before{
 		@include ab;
 		width: 130%;
-		height: 3px;
-		background: $rd;
+		height: 2px;
+		background: $gy;
 		position: absolute;
 		left: -15%;
 		top: 50%;
@@ -184,7 +184,7 @@
 	&:hover{
 		&:after,
 		&:before{
-			background: #000;
+			background: $bk;
 		}
 	}
 	&_v1{

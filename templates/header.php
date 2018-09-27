@@ -28,7 +28,7 @@
 					<nav class="header__nav">
 						<ul class="menu">
 							<li class="menu__item">
-								<a href="#rules" class="js-open-popup menu__a">Правила</a>
+								<a href="#rules" class="js-open-popup menu__a c-red">Запрещено публиковать...</a>
 							</li>
 						</ul>
 					</nav>

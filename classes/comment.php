@@ -11,6 +11,12 @@ class Comment extends Core {
 	private function getResource() {
 		if(!empty($_GET['r'])){
 			$res = $this->modUrl(trim(strip_tags($_GET['r'])));
+
+			if (strpos(urldecode($res), 'youtube.com/watch') === false) {
+				$this->resource = false;
+				return;
+			}
+
 			$res_sql = $this->_db->prepare('SELECT * FROM resources WHERE url LIKE ?');
 			$res_sql->execute(array(urldecode('%'.$res.'%')));
 			$resource = $res_sql->fetch(PDO::FETCH_ASSOC);
@@ -30,7 +36,7 @@ class Comment extends Core {
 		if (preg_match('/youtube.*?\?v=([\w\-]+)($|\&)/i', $this->resource['url'], $vid_id)) {
 			$iframe = '<iframe width="560" height="315" src="https://www.youtube.com/embed/'.$vid_id[1].'?rel=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
 		} else {
-			# code...
+			$iframe = '<iframe width="560" height="315" src="'.$this->resource['url'].'"></iframe>';
 		}
 		$this->resource['iframe'] = $iframe;
 	}
@@ -81,14 +87,11 @@ class Comment extends Core {
 	}
 
 	private function parse($url) {
-		if (strpos($url, 'vk.com') !== false) {
-			return $url;
-		}
-
 		$title = '';
 		
 		$ch = curl_init($url);
 
+		curl_setopt($ch, CURLOPT_TIMEOUT, 21);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
@@ -101,6 +104,9 @@ class Comment extends Core {
 		if (strpos($url, 'youtube') !== false) {
 			preg_match('/<.*?eow-title.*?>(.*?)<\/.*?>/is', $html, $matches);
 			$title = $matches[1];
+		} else if (strpos($url, 'vk.com') !== false) {
+			preg_match('/<.*?title.*?>(.*?)<\/.*?>.*?<.*?pi_author.*?>(.*?)<\/.*?>/is', $html, $matches);
+			$title = $matches[1].' - '.$matches[2];
 		} else {
 			preg_match('/<.*?title.*?>(.*?)<\/.*?>/is', $html, $matches);
 			$title = $matches[1];

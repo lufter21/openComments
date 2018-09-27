@@ -1922,8 +1922,8 @@ a:hover {
 
 .popup__close {
   position: absolute !important;
-  right: 5px;
-  top: 40px;
+  right: 15px;
+  top: 50px;
   z-index: 3;
   cursor: pointer;
 }
@@ -2102,7 +2102,12 @@ body.is-popup-opened {
 
 /*rules*/
 .p-rules {
-  max-width: 1000px;
+  max-width: 800px;
+}
+
+.p-rules li {
+  margin: 25px 0;
+  line-height: 1.5;
 }
 
 /*forms*/
@@ -2352,8 +2357,8 @@ body.is-popup-opened {
   display: block;
   content: "";
   width: 130%;
-  height: 3px;
-  background: #ff0000;
+  height: 2px;
+  background: #aaaaaa;
   position: absolute;
   left: -15%;
   top: 50%;
@@ -2370,7 +2375,7 @@ body.is-popup-opened {
 }
 
 .btn-close:hover:after, .btn-close:hover:before {
-  background: #000;
+  background: #212121;
 }
 
 .btn-close_v1 {

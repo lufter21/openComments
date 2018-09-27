@@ -6,7 +6,13 @@ require $_SERVER['DOCUMENT_ROOT'].'/templates/header.php';
 
 <div class="container wrap">
 
-	<?php if (!empty($get->resource)) { ?>
+	<?php if ($get->resource === false) { ?>
+
+		<div class="txt c-red">
+			В данный момент, для комментирования доступны, только видео с сайта www.youtube.com
+		</div>
+
+	<?php } else if (!empty($get->resource)) { ?>
 	
 	<div class="head pad">
 		<h1 class="head__title"><?php echo $get->meta['h1']; ?></h1>
@@ -179,7 +185,7 @@ require $_SERVER['DOCUMENT_ROOT'].'/templates/header.php';
 	<?php } else { ?>
 
 		<div class="txt c-red">
-			Эту страницу еще не комментировали. Войдите в свой аккаунт или зарегистрируйтесь.
+			Это видео еще не комментировали. Войдите в свой аккаунт или зарегистрируйтесь.
 		</div>
 
 	<?php } ?>
