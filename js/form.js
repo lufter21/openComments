@@ -195,4 +195,11 @@ $(document).ready(function() {
 	});
 
 	initOverLabels();
+
+	$('body').on('input', '.form__textarea_var-h', function() {
+		var val = $(this).val(),
+		Shape = $(this).parent().find('.form__textarea-mirror');
+		val = val.replace(/\n/g, '<br>');
+		Shape.html(val +'&nbsp;');
+	});
 });
