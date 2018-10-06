@@ -57,7 +57,7 @@ require $_SERVER['DOCUMENT_ROOT'].'/templates/header.php';
 
 					<?php if (!empty($get->comments)) { foreach ($get->comments as $key => $val) { ?>
 
-					<div class="comm">
+					<div id="comment-<?php echo $val['comm']['id']; ?>" class="comm">
 						<div class="comm__thumb">
 							<img src="<?php echo (!empty($val['comm']['user_avatar'])) ? $val['comm']['user_avatar'] : '/images/avatar.png'; ?>" alt="avatar" class="cover-img">
 						</div>
@@ -66,7 +66,11 @@ require $_SERVER['DOCUMENT_ROOT'].'/templates/header.php';
 								<?php echo $val['comm']['user_name']; ?> <span class="comm__time"><?php echo $val['comm']['time']; ?></span>
 							</div>
 							<div class="comm__txt">
-								<?php echo nl2br($val['comm']['text']); ?>
+								<?php if ($val['comm']['approved']) {
+									echo nl2br($val['comm']['text']);
+								} else { ?>
+								<i>Комментарий отправлен на модерацию.</i>
+								<?php } ?>
 							</div>
 
 							<?php if (!empty($get->user) && ($get->user['user_id'] != $val['comm']['user_id'])) { ?>
@@ -78,7 +82,9 @@ require $_SERVER['DOCUMENT_ROOT'].'/templates/header.php';
 							<form id="replay-form-<?php echo $key; ?>" action="/functions/add-comment.php" method="POST" class="comm__form js-replay-form form hide on-toggled-show">
 
 								<input type="hidden" name="resource_id" value="<?php echo $get->resource['id']; ?>">
+								<input type="hidden" name="parent" value="<?php echo $val['comm']['id']; ?>">
 								<input type="hidden" name="relation" value="<?php echo $val['comm']['id']; ?>">
+								<input type="hidden" name="relation_name" value="<?php echo $val['comm']['user_name']; ?>">
 
 								<div class="row">
 									<div class="col pad-0">
@@ -110,7 +116,7 @@ require $_SERVER['DOCUMENT_ROOT'].'/templates/header.php';
 
 						<?php if (!empty($val['replay'])) { foreach ($val['replay'] as $repl_key => $repl_val) { ?>
 
-						<div class="comm">
+						<div id="comment-<?php echo $repl_val['id']; ?>" class="comm">
 							<div class="comm__thumb">
 								<img src="<?php echo (!empty($repl_val['user_avatar'])) ? $repl_val['user_avatar'] : '/images/avatar.png'; ?>" alt="avatar" class="cover-img">
 							</div>
@@ -119,19 +125,24 @@ require $_SERVER['DOCUMENT_ROOT'].'/templates/header.php';
 									<?php echo $repl_val['user_name']; ?> <span class="comm__time"><?php echo $repl_val['time']; ?></span>
 								</div>
 								<div class="comm__txt">
-									<?php echo $repl_val['text']; ?>
+									<?php if ($repl_val['approved']) { ?>
+									<a href="#comment-<?php echo $repl_val['relation']; ?>" class="js-anchor"><?php echo $repl_val['relation_name']; ?></a>, <?php echo nl2br($repl_val['text']); ?>
+									<?php } else { ?>
+										<i>Комментарий отправлен на модерацию.</i>
+									<?php } ?>
 								</div>
 								
-								<?php if (!empty($get->user)) { ?>
+								<?php if (!empty($get->user) && ($get->user['user_id'] != $repl_val['user_id'])) { ?>
 								<div>
 									<button class="js-toggle comm__replay-btn" data-target-id="replay-form-<?php echo $key.'-'.$repl_key; ?>" data-second-button-text="Отмена">Ответить</button>
 								</div>
-								<?php } ?>
 
 								<form id="replay-form-<?php echo $key.'-'.$repl_key; ?>" action="/functions/add-comment.php" method="POST" class="comm__form js-replay-form form hide on-toggled-show">
 
 									<input type="hidden" name="resource_id" value="<?php echo $get->resource['id']; ?>">
-									<input type="hidden" name="relation" value="<?php echo $val['comm']['id']; ?>">
+									<input type="hidden" name="parent" value="<?php echo $val['comm']['id']; ?>">
+									<input type="hidden" name="relation" value="<?php echo $repl_val['id']; ?>">
+									<input type="hidden" name="relation_name" value="<?php echo $repl_val['user_name']; ?>">
 
 									<div class="row">
 										<div class="col pad-0">
@@ -153,6 +164,8 @@ require $_SERVER['DOCUMENT_ROOT'].'/templates/header.php';
 									</div>
 
 								</form>
+
+								<?php } ?>
 
 							</div>
 						</div>

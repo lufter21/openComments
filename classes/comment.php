@@ -10,9 +10,11 @@ class Comment extends Core {
 
 	private function getResource() {
 		if(!empty($_GET['r'])){
-			$res = $this->modUrl(trim(strip_tags($_GET['r'])));
+			$res = trim(strip_tags($_GET['r']));
 
-			if (strpos(urldecode($res), 'youtube.com/watch') === false) {
+			if (preg_match('/(?:youtube.*?\?v=|youtu\.be.*?)([\w\-]+)(?:$|\&)/i', $res, $vid_id)) {
+				$res = 'https://www.youtube.com/watch?v='.$vid_id[1];
+			} else {
 				$this->resource = false;
 				return;
 			}
@@ -35,8 +37,6 @@ class Comment extends Core {
 		$iframe = '';
 		if (preg_match('/youtube.*?\?v=([\w\-]+)($|\&)/i', $this->resource['url'], $vid_id)) {
 			$iframe = '<iframe width="560" height="315" src="https://www.youtube.com/embed/'.$vid_id[1].'?rel=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
-		} else {
-			$iframe = '<iframe width="560" height="315" src="'.$this->resource['url'].'"></iframe>';
 		}
 		$this->resource['iframe'] = $iframe;
 	}
@@ -57,10 +57,10 @@ class Comment extends Core {
 		$comm_arr = array();
 
 		foreach ($comments as $val) {
-			if ($val['relation'] == null) {
+			if ($val['parent'] == null) {
 				$comm_arr[$val['id']]['comm'] = $val;
 			} else {
-				$comm_arr[$val['relation']]['replay'][$val['id']] = $val;
+				$comm_arr[$val['parent']]['replay'][$val['id']] = $val;
 			}
 		}
 
@@ -76,14 +76,6 @@ class Comment extends Core {
 		));
 		header('Location: /comment?r='.urlencode($res));
 		exit;
-	}
-
-	private function modUrl($url) {
-		if (preg_match('/youtube.*?\?v=([\w\-]+)($|\&)/i', $url, $vid_id)) {
-			$url = 'https://www.youtube.com/watch?v='.$vid_id[1];
-		}
-		
-		return $url;
 	}
 
 	private function parse($url) {

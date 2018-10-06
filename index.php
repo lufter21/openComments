@@ -13,8 +13,9 @@ require $_SERVER['DOCUMENT_ROOT'].'/templates/header.php';
 					<div class="col-8 col-center">
 						<div class="form__field form__field_btn">
 							<label class="overlabel">Ссылка на страницу</label>
-							<input type="text" name="r" data-required="true" class="form__text-input" value="">
+							<input type="text" data-type="youtube_link" name="r" data-required="true" class="form__text-input" value="">
 							<button type="submit" class="form__btn form__btn_search"></button>
+							<div class="form__error-tip" data-second-error-text="Вставьте ссылку на видео в youtube">Вставьте ссылку</div>
 						</div>
 					</div>
 				</div>

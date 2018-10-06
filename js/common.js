@@ -5,19 +5,6 @@ $(document).ready(function(){
 
 	$('.wrapper, .wrapper__full-height').css('padding-bottom', $('.footer').innerHeight());
 
-	$('#slider').slick({
-		infinite: true,
-		slidesToShow: 1,
-		slidesToScroll: 1
-	});
-
-	$('.scroll-pane').jScrollPane();
-
-	flexImage(winW);
-
-	overfrowImg();
-
-
 	//headerFix
 	$(window).scroll(function () {
 		if (!$('body').hasClass('is-popup-opened')) {
@@ -79,7 +66,5 @@ $(document).ready(function(){
 			}
 		});
 	});
-
-	Form.submit('#form3');
 
 });
