@@ -18,6 +18,12 @@
 	.wrap{
 		@include clr;
 	}
+	@media(max-width: 1000px){
+		.left,
+		.right{
+			padding: 5px 15px;
+		}
+	}
 }
 
 .dealersair img{
@@ -28,6 +34,3 @@
 	height: auto;
 }
 
-@media(max-width: 1000px){
-	
-}

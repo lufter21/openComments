@@ -8,9 +8,9 @@ require $_SERVER['DOCUMENT_ROOT'].'/templates/header.php';
 
 	<?php if ($get->resource === false) { ?>
 
-		<div class="txt c-red">
-			В данный момент, для комментирования доступны, только видео с сайта www.youtube.com
-		</div>
+	<div class="txt c-red">
+		В данный момент, для комментирования доступны, только видео с сайта www.youtube.com
+	</div>
 
 	<?php } else if (!empty($get->resource)) { ?>
 	
@@ -57,6 +57,9 @@ require $_SERVER['DOCUMENT_ROOT'].'/templates/header.php';
 
 					<?php if (!empty($get->comments)) { foreach ($get->comments as $key => $val) { ?>
 
+					<?php if ($val['comm']['approved'] || (!$val['comm']['approved'] && !empty($get->user) && ($get->user['user_id'] == $val['comm']['user_id']))) { ?>
+
+					<!--comment/-->
 					<div id="comment-<?php echo $val['comm']['id']; ?>" class="comm">
 						<div class="comm__thumb">
 							<img src="<?php echo (!empty($val['comm']['user_avatar'])) ? $val['comm']['user_avatar'] : '/images/avatar.png'; ?>" alt="avatar" class="cover-img">
@@ -65,12 +68,15 @@ require $_SERVER['DOCUMENT_ROOT'].'/templates/header.php';
 							<div class="comm__name">
 								<?php echo $val['comm']['user_name']; ?> <span class="comm__time"><?php echo $val['comm']['time']; ?></span>
 							</div>
+
 							<div class="comm__txt">
-								<?php if ($val['comm']['approved']) {
-									echo nl2br($val['comm']['text']);
-								} else { ?>
-								<i>Комментарий отправлен на модерацию.</i>
-								<?php } ?>
+								<?php 
+								if (!$val['comm']['approved']) {
+									echo '<i class="c-gray">Комментарий отправлен на модерацию.</i><br>';
+								}
+
+								echo nl2br($val['comm']['text']); 
+								?>
 							</div>
 
 							<?php if (!empty($get->user) && ($get->user['user_id'] != $val['comm']['user_id'])) { ?>
@@ -111,98 +117,104 @@ require $_SERVER['DOCUMENT_ROOT'].'/templates/header.php';
 
 						</div>
 					</div>
+					<!--/comment-->
+
+					<?php } ?>
 
 					<div class="comments__replay">
 
-						<?php if (!empty($val['replay'])) { foreach ($val['replay'] as $repl_key => $repl_val) { ?>
+						<?php if (!empty($val['replay'])) { foreach ($val['replay'] as $repl_key => $repl_val) {
+							if ($repl_val['approved'] || (!$repl_val['approved'] && !empty($get->user) && ($get->user['user_id'] == $repl_val['user_id']))) { ?>
 
-						<div id="comment-<?php echo $repl_val['id']; ?>" class="comm">
-							<div class="comm__thumb">
-								<img src="<?php echo (!empty($repl_val['user_avatar'])) ? $repl_val['user_avatar'] : '/images/avatar.png'; ?>" alt="avatar" class="cover-img">
-							</div>
-							<div class="comm__cont">
-								<div class="comm__name">
-									<?php echo $repl_val['user_name']; ?> <span class="comm__time"><?php echo $repl_val['time']; ?></span>
+							<div id="comment-<?php echo $repl_val['id']; ?>" class="comm">
+								<div class="comm__thumb">
+									<img src="<?php echo (!empty($repl_val['user_avatar'])) ? $repl_val['user_avatar'] : '/images/avatar.png'; ?>" alt="avatar" class="cover-img">
 								</div>
-								<div class="comm__txt">
-									<?php if ($repl_val['approved']) { ?>
-									<a href="#comment-<?php echo $repl_val['relation']; ?>" class="js-anchor"><?php echo $repl_val['relation_name']; ?></a>, <?php echo nl2br($repl_val['text']); ?>
-									<?php } else { ?>
-										<i>Комментарий отправлен на модерацию.</i>
-									<?php } ?>
-								</div>
-								
-								<?php if (!empty($get->user) && ($get->user['user_id'] != $repl_val['user_id'])) { ?>
-								<div>
-									<button class="js-toggle comm__replay-btn" data-target-id="replay-form-<?php echo $key.'-'.$repl_key; ?>" data-second-button-text="Отмена">Ответить</button>
-								</div>
+								<div class="comm__cont">
+									<div class="comm__name">
+										<?php echo $repl_val['user_name']; ?> <span class="comm__time"><?php echo $repl_val['time']; ?></span>
+									</div>
+									<div class="comm__txt">
+										<?php
+										if (!$repl_val['approved']) {
+											echo '<i class="c-gray">Комментарий отправлен на модерацию.</i><br>';
+										}
 
-								<form id="replay-form-<?php echo $key.'-'.$repl_key; ?>" action="/functions/add-comment.php" method="POST" class="comm__form js-replay-form form hide on-toggled-show">
+										echo '<a href="#comment-'.$repl_val['relation'].'" class="js-anchor">'.$repl_val['relation_name'].'</a>, '.nl2br($repl_val['text']); 
+										?>
+									</div>
 
-									<input type="hidden" name="resource_id" value="<?php echo $get->resource['id']; ?>">
-									<input type="hidden" name="parent" value="<?php echo $val['comm']['id']; ?>">
-									<input type="hidden" name="relation" value="<?php echo $repl_val['id']; ?>">
-									<input type="hidden" name="relation_name" value="<?php echo $repl_val['user_name']; ?>">
+									<?php if (!empty($get->user) && ($get->user['user_id'] != $repl_val['user_id'])) { ?>
+									<div>
+										<button class="js-toggle comm__replay-btn" data-target-id="replay-form-<?php echo $key.'-'.$repl_key; ?>" data-second-button-text="Отмена">Ответить</button>
+									</div>
 
-									<div class="row">
-										<div class="col pad-0">
-											<div class="form__field">
-												<div class="pos-r">
-													<div class="form__textarea-mirror"></div>
-													<textarea name="comment" data-required="true" class="form__textarea form__textarea_var-h"></textarea>
-													<label class="overlabel">Добавьте ответ</label>
+									<form id="replay-form-<?php echo $key.'-'.$repl_key; ?>" action="/functions/add-comment.php" method="POST" class="comm__form js-replay-form form hide on-toggled-show">
+
+										<input type="hidden" name="resource_id" value="<?php echo $get->resource['id']; ?>">
+										<input type="hidden" name="parent" value="<?php echo $val['comm']['id']; ?>">
+										<input type="hidden" name="relation" value="<?php echo $repl_val['id']; ?>">
+										<input type="hidden" name="relation_name" value="<?php echo $repl_val['user_name']; ?>">
+
+										<div class="row">
+											<div class="col pad-0">
+												<div class="form__field">
+													<div class="pos-r">
+														<div class="form__textarea-mirror"></div>
+														<textarea name="comment" data-required="true" class="form__textarea form__textarea_var-h"></textarea>
+														<label class="overlabel">Добавьте ответ</label>
+													</div>
+													<div class="form__error-tip">Заполните поле</div>
 												</div>
-												<div class="form__error-tip">Заполните поле</div>
 											</div>
 										</div>
-									</div>
 
-									<div class="row">
-										<div class="col-right pad-0">
-											<button type="submit" class="button button_red">Отправить</button>
+										<div class="row">
+											<div class="col-right pad-0">
+												<button type="submit" class="button button_red">Отправить</button>
+											</div>
 										</div>
-									</div>
 
-								</form>
+									</form>
 
-								<?php } ?>
+									<?php } ?>
 
+								</div>
 							</div>
+
+							<?php } } } ?>
+
 						</div>
 
 						<?php } } ?>
 
 					</div>
 
-					<?php } } ?>
-
 				</div>
 
+
 			</div>
 
+			<div class="col-5">
+
+				<?php if (!empty($get->resource['iframe'])) { ?>
+				<div class="iframe-wrap fix-block">
+					<?php echo $get->resource['iframe']; ?>
+				</div>
+				<?php } ?>
+
+			</div>
 
 		</div>
 
-		<div class="col-5">
-
-			<?php if (!empty($get->resource['iframe'])) { ?>
-			<div class="iframe-wrap fix-block">
-				<?php echo $get->resource['iframe']; ?>
-			</div>
-			<?php } ?>
-
-		</div>
-
-	</div>
-
-	<?php } else { ?>
+		<?php } else { ?>
 
 		<div class="txt c-red">
 			Это видео еще не комментировали. Войдите в свой аккаунт или зарегистрируйтесь.
 		</div>
 
-	<?php } ?>
+		<?php } ?>
 
-</div>
+	</div>
 
-<?php require $_SERVER['DOCUMENT_ROOT'].'/templates/footer.php';?>
+	<?php require $_SERVER['DOCUMENT_ROOT'].'/templates/footer.php';?>

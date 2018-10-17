@@ -10,7 +10,7 @@ class Comment extends Core {
 
 	private function getResource() {
 		if(!empty($_GET['r'])){
-			$res = trim(strip_tags($_GET['r']));
+			$res = urldecode(trim(strip_tags($_GET['r'])));
 
 			if (preg_match('/(?:youtube.*?\?v=|youtu\.be.*?)([\w\-]+)(?:$|\&)/i', $res, $vid_id)) {
 				$res = 'https://www.youtube.com/watch?v='.$vid_id[1];
@@ -19,8 +19,8 @@ class Comment extends Core {
 				return;
 			}
 
-			$res_sql = $this->_db->prepare('SELECT * FROM resources WHERE url LIKE ?');
-			$res_sql->execute(array(urldecode('%'.$res.'%')));
+			$res_sql = $this->_db->prepare('SELECT * FROM resources WHERE url=?');
+			$res_sql->execute(array($res));
 			$resource = $res_sql->fetch(PDO::FETCH_ASSOC);
 			if ($resource) {
 				$this->resource = $resource;

@@ -60,7 +60,7 @@ gulp.task('inc', function() {
 gulp.task('css', function () {
 	gulp.src(['!./src/sass/_*.scss', './src/sass/*.scss'])
 	.pipe(sass({outputStyle: 'expanded'}).on('error', sass.logError))
-	.pipe(autoprefixer(['last 121 versions', '> 1%']))
+	.pipe(autoprefixer(['last 3 versions', '> 1%']))
 	.pipe(replace('\/..', ''))
 	.pipe(gulp.dest('./css'))
 	.pipe(notify('CSS with Autoprefixes Compiled!'));
@@ -69,7 +69,7 @@ gulp.task('css', function () {
 gulp.task('mincss', function () {
 	gulp.src('./src/sass/styles.scss')
 	.pipe(sass().on('error', sass.logError))
-	.pipe(autoprefixer(['last 121 versions', '> 1%']))
+	.pipe(autoprefixer(['last 3 versions', '> 1%']))
 	.pipe(replace('\/..', ''))
 	.pipe(cssmin()) 
 	.pipe(rename({suffix: '.min'}))

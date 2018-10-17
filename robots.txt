@@ -1,8 +1,1 @@
-User-agent: *
-Disallow: /go/
-Disallow: /ru$
-Disallow: /ua$
-Disallow: /cabinet$
-Disallow: /cabinet/
-Disallow: /sys/
 Host: https://opencomments.dealersair.com

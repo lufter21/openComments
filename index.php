@@ -1,7 +1,8 @@
 <?php
 require $_SERVER['DOCUMENT_ROOT'].'/load.php';
 $get = new Page();
-$get->meta = array('title' => 'Главная страница', );
+$get->meta = array('title' => 'Территория свободных комментариев');
+$menu_item_current = 'home';
 require $_SERVER['DOCUMENT_ROOT'].'/templates/header.php';
 ?>
 
@@ -10,7 +11,7 @@ require $_SERVER['DOCUMENT_ROOT'].'/templates/header.php';
 		<div class="wrap">
 			<form id="search-form" action="/comment" method="GET" class="form">
 				<div class="row">
-					<div class="col-8 col-center">
+					<div class="col-8 col-center vw750-col-12">
 						<div class="form__field form__field_btn">
 							<label class="overlabel">Ссылка на страницу</label>
 							<input type="text" data-type="youtube_link" name="r" data-required="true" class="form__text-input" value="">
