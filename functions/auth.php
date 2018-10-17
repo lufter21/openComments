@@ -31,7 +31,7 @@ function do_login($primary_user_data, $password = ""){
 	}
 
 	if($user_data['password'] === $current_password){
-		$access_key = $identity.sha1(mt_rand());
+		$access_key = sha1($identity.mt_rand());
 		$set_access_key = $db->prepare('UPDATE users SET access_key=? WHERE identity=?');
 		$set_access_key->execute(array($access_key, $identity));
 		$_SESSION['access'] = $access_key;
