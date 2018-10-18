@@ -1,0 +1,109 @@
+@import "../../../sass/variables";
+@import "../../../sass/functions";
+@import "../../../sass/extends";
+@import "../../../sass/mixins";
+
+/*User*/
+.user{
+	height: 50px;
+	position: relative;
+	float: right;
+	margin-left: 100px;
+	&__thumb{
+		display: inline-block;
+		width: 50px;
+		height: 50px;
+		border-radius: 50%;
+		vertical-align: middle;
+		overflow: hidden;
+		img{
+			width: 100%;
+			height: auto;
+			min-height: 100%;
+		}
+	}
+	&__name{
+		display: inline-block;
+		vertical-align: middle;
+		margin-right: 10px;
+		text-align: right;
+	}
+	&__link{
+		display: inline-block;
+		text-decoration: none;
+		transition: .5s;
+		&:hover{
+			color: $rd;
+		}
+		&-logout{
+			display: inline-block;
+			font-size: 12px;
+			margin-top: 3px;
+			opacity: .8;
+		}
+	}
+	&__bubble{
+		position: absolute;
+		width: 180px;
+		top: 55px;
+		right: 0;
+		padding: 15px;
+		background: #FFF;
+		box-shadow: 0 1px 11px rgba(0,0,0,.21);
+		visibility: hidden;
+		opacity: 0;
+		transition: opacity .5s;
+		&.toggled{
+			visibility: visible;
+			opacity: 1;
+		}
+	}
+	&__auth-msg{
+		font-size: 14px;
+		color: $rd;
+		line-height: (18/14);
+		span{
+			display: inline-block;
+			margin-bottom: 15px;
+		}
+	}
+	&__menu{
+		list-style: none;
+		&-item{
+			margin-top: 15px;
+			&:first-child{
+				margin-top: 0 !important;
+			}
+		}
+		&-a{
+			font-size: 15px;
+			text-decoration: none;
+			&_out{
+				font-size: 13px;
+				color: $gy;
+			}
+			&:hover{
+				color: $rd;
+			}
+		}
+	}
+	&_l{
+		padding-top: 18px;
+		.user__bubble{
+			width: 230px;
+			padding-right: 0;
+		}
+	}
+	@media(max-width: 1000px){
+		&__bubble{
+			width: 100%;
+			top: 0;
+			margin-top: 20px;
+			box-shadow: none !important;
+			background: $llgy !important;
+			&.toggled{
+				position: static;
+			}
+		}
+	}
+}

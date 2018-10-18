@@ -1,84 +1,267 @@
-var gulp = require('gulp'),
+const gulp = require('gulp'),
 sass = require('gulp-sass'),
-notify = require("gulp-notify"),
-sourcemaps = require('gulp-sourcemaps'),
-fileinclude = require('gulp-file-include'),
-cssmin = require('gulp-cssmin'),
-rename = require('gulp-rename'),
 autoprefixer = require('gulp-autoprefixer'),
+babel = require('gulp-babel'),
+concat = require('gulp-concat'),
 uglify = require('gulp-uglify'),
-replace = require('gulp-replace');
+sourcemaps = require('gulp-sourcemaps'),
+rename = require('gulp-rename'),
+fileinclude = require('gulp-file-include'),
+replace = require('gulp-replace'),
+notify = require('gulp-notify'),
+del = require('del'),
+svgSprite = require('gulp-svg-sprite');
 
+//modules
+var modulesOn = [
+'header',
+'header/user',
+'header/menu',
+//'fsscroll',
+'toggle',
+//'flex-image',
+//'cover-image',
+//'video',
+'popup',
+//'form/checkbox',
+//'form/radio',
+'form/select',
+//'form/file',
+'form/placeholder',
+//'form/maskinput',
+'form',
+//'accord',
+//'ajax',
+'more',
+//'tab',
+'bubble',
+'anchor',
+//'diagram',
+//'numberspin',
+//'share',
+//'timer',
+'footer',
+//'getcontentajax',
+//'mouseparallax',
+//'floatslider',
+//'slickslider',
+//'scrollpane',
+];
 
-gulp.task('default', function() {
-  // place code for your default task here
+var assets = {
+	form: [],
+	slickslider: ['src/assets/slick.min.js', 'src/assets/jquery-3.1.1.min.js'],
+	scrollpane: ['src/assets/scrollpane.min.js', 'src/assets/jquery-3.1.1.min.js', 'src/assets/mousewheel.js']
+},
+jsAssets = [];
+
+modulesOn.forEach(function(val) {
+	if (assets[val]) {
+		jsAssets = jsAssets.concat(assets[val]);
+	}
 });
 
-function Sass(src) {
+//src
+var cssSrc = ['src/sass/reset.scss', 'src/sass/font.scss', 'src/sass/base.scss', 'src/sass/grid.scss', 'src/sass/button.scss'].concat(modulesOn.map((m) => 'src/modules/'+ m + '/*.scss'), 'src/sass/styles.scss', 'src/sass/sprite.scss', 'src/sass/animation.scss', 'src/sass/decor.scss', 'src/sass/class.scss'),
+jsSrc = ['src/js/global.js'].concat(modulesOn.map((m) => 'src/modules/'+ m + '/*.js'));
+
+//DEV MODE
+//copy module folders
+gulp.task('copy_modules', function() {
+	return gulp.src(['src/modules/**/*'], {base: 'src/modules/'})
+	.pipe(gulp.dest('src/modules-set/'));
+});
+
+gulp.task('clean_modules_folder', ['copy_modules'], function() {
+	return del(['src/modules/*']);
+});
+
+gulp.task('include_modules', ['clean_modules_folder'], function() {
+	return gulp.src(modulesOn.map((m) => 'src/modules-set/'+ m +'/*.*'), {base: 'src/modules-set/'})
+	.pipe(gulp.dest('src/modules/'))
+	.pipe(notify('Module included!'));
+});
+
+gulp.task('clean_js_folder', ['include_modules'], function() {
+	return del(['dist/js/*']);
+});
+
+gulp.task('dev', ['clean_js_folder'], function() {
+	//html dev
+	HTML(['!src/html/_*.html', 'src/html/*.html']);
+
+	//build style.css
+	CSS(cssSrc);
+
+	//delete style.min.css
+	//del(['dist/css/style.min.css', 'dist/css/style.min.css.map']);
+
+	//build script.js
+	JS(jsSrc);
+
+	//refresh common script
+	gulp.src(['!src/js/global.js', 'src/js/*.js'])
+	.pipe(gulp.dest('dist/js'))
+	.pipe(notify('Script has Refreshed!'));
+
+	//import js assets
+	gulp.src(jsAssets)
+	.pipe(gulp.dest('dist/js'))
+	.pipe(notify('JS Assets had imported!'));
+
+	//watch css
+	gulp.watch(['src/sass/*.scss'].concat(modulesOn.map((m) => 'src/modules/'+ m + '/*.scss')), function() {
+		CSS(cssSrc);
+	});
+
+	//watch js
+	gulp.watch(['src/js/global.js'].concat(modulesOn.map((m) => 'src/modules/'+ m + '/*.js')), function() {
+		JS(jsSrc);
+	});
+
+	gulp.watch(['!src/js/global.js', 'src/js/*.js'], function() {
+		gulp.src(['!src/js/global.js', 'src/js/*.js'])
+		.pipe(gulp.dest('dist/js'))
+		.pipe(notify('Script has Refreshed!'));;
+	});
+
+	//watch html
+	gulp.watch(['!src/html/_*.html', 'src/html/*.html'], function(event) {
+		HTML(['!src/html/_*.html', event.path]);
+	});
+
+	gulp.watch(['src/html/_*.html'].concat(modulesOn.map((m) => 'src/modules/'+ m + '/*.html')), function() {
+		HTML(['!src/html/_*.html', 'src/html/*.html']);
+	});
+});
+
+//svg sprite
+gulp.task('svgs', function() {
+	gulp.src('src/images/svg/*.svg')
+	.pipe(svgSprite({
+		shape: {
+			spacing: {
+				padding: 10
+			}
+		},
+		mode: {
+			view: {
+				bust: false,
+				sprite: '../dist/images/sprite.svg',
+				prefix: '%%svg-%s',
+				render: {
+					scss: {dest: '../src/sass/_sprite-extends.scss'}
+				}
+			}
+		}
+	}))
+	.pipe(replace('\/dist\/', '/'))
+	.pipe(gulp.dest('.'))
+	.pipe(notify('SVG Sprites has built!'));
+});
+
+//DISTRIBUTION
+gulp.task('dist', function() {
+	HTML(['src/html/*.html', '!src/html/_*.html'], true);
+
+	CSS(cssSrc, true);
+
+	//del(['dist/css/style.css', 'dist/css/style.css.map']);
+
+	JS(jsSrc, true);
+
+	gulp.src(['!src/js/global.js', 'src/js/*.js'])
+	.pipe(gulp.dest('dist/js'))
+	.pipe(notify('Common Script has Refreshed!'));
+
+	//del(['dist/js/script.js', 'dist/js/script.js.map']);
+});
+
+//Functions
+//css
+function CSS(src, dist) {
 	setTimeout(function() {
-		gulp.src(src)
-		.pipe(sourcemaps.init())
-		.pipe(sass({outputStyle: 'expanded'}).on('error', sass.logError))
-		.pipe(replace('\/..', ''))
-		.pipe(sourcemaps.write('../src/sass'))
-		.pipe(gulp.dest('./css'))
-		.pipe(notify('CSS Compiled!'));
-	}, 521);
+		if (dist) {
+			gulp.src(src)
+			.pipe(sourcemaps.init())
+			.pipe(sass({outputStyle: 'compact'}).on('error', sass.logError))
+			.pipe(autoprefixer(['last 3 versions']))
+			.pipe(concat('style.css'))
+			//.pipe(rename({suffix: '.min'}))
+			.pipe(sourcemaps.write('.'))
+			.pipe(gulp.dest('dist/css'))
+			.pipe(notify({
+				title: 'CSS',
+				message: 'Dist Styles'
+			}));
+		} else {
+			gulp.src(src)
+			.pipe(sourcemaps.init())
+			.pipe(sass({outputStyle: 'expanded'}).on('error', sass.logError))
+			.pipe(concat('style.css'))
+			.pipe(sourcemaps.write('.'))
+			.pipe(gulp.dest('dist/css'))
+			.pipe(notify({
+				onLast: true,
+				title: 'CSS',
+				message: 'Styles has Compiled!'
+			}));
+		}
+	}, 321);
 }
 
-gulp.task('w', function () {
+//javascript
+function JS(src, dist) {
+	if (dist) {
+		gulp.src(src)
+		.pipe(sourcemaps.init())
+		.pipe(babel())
+		//.pipe(uglify())
+		.on('error', notify.onError(function(err) { return err; }))
+		.pipe(concat('script.js'))
+		//.pipe(rename({suffix: '.min'}))
+		.pipe(sourcemaps.write('.'))
+		.pipe(gulp.dest('dist/js'))
+		.pipe(notify({
+				title: 'JS',
+				message: 'Dist Scripts'
+			}));
+	} else {
+		gulp.src(src)
+		.pipe(sourcemaps.init())
+		.pipe(concat('script.js'))
+		.pipe(sourcemaps.write('.'))
+		.pipe(gulp.dest('dist/js'))
+		.pipe(notify({
+				onLast: true,
+				title: 'JS',
+				message: 'Scripts has Compiled!'
+			}));
+	}
+}
 
-	gulp.watch('./src/sass/*.scss', function() {
-		Sass('./src/sass/styles.scss');
-	});
-
-	gulp.watch('./src/html/*.html', function(event) {
-		gulp.src(['!./src/html/_*.html', event.path])
+//html
+function HTML(src, dist) {
+	if (dist) {
+		gulp.src(src)
 		.pipe(fileinclude())
-		.pipe(replace('..\/..\/', ''))
-		.pipe(gulp.dest('./'))
-		.pipe(notify('HTML Included!'));
-	});
-
-	gulp.watch('./src/html/_*.html', function() {
-		gulp.src(['!./src/html/_*.html', './src/html/*.html'])
+		.on('error', notify.onError(function(err) { return err; }))
+		//.pipe(replace('style.css', 'style.min.css'))
+		//.pipe(replace('script.js', 'script.min.js'))
+		.pipe(gulp.dest('dist'))
+		.pipe(notify({
+			title: 'HTML',
+			message: 'Dist HTML'
+		}));
+	} else {
+		gulp.src(src)
 		.pipe(fileinclude())
-		.pipe(replace('..\/..\/', ''))
-		.pipe(gulp.dest('./'))
-		.pipe(notify('HTML Included!'));
-	});
-
-});
-
-gulp.task('inc', function() {
-	gulp.src(['!./src/html/_*.html', './src/html/*.html'])
-	.pipe(fileinclude())
-	.pipe(replace('..\/..\/', ''))
-	.pipe(gulp.dest('./'));
-});
-
-gulp.task('css', function () {
-	gulp.src(['!./src/sass/_*.scss', './src/sass/*.scss'])
-	.pipe(sass({outputStyle: 'expanded'}).on('error', sass.logError))
-	.pipe(autoprefixer(['last 3 versions', '> 1%']))
-	.pipe(replace('\/..', ''))
-	.pipe(gulp.dest('./css'))
-	.pipe(notify('CSS with Autoprefixes Compiled!'));
-});
-
-gulp.task('mincss', function () {
-	gulp.src('./src/sass/styles.scss')
-	.pipe(sass().on('error', sass.logError))
-	.pipe(autoprefixer(['last 3 versions', '> 1%']))
-	.pipe(replace('\/..', ''))
-	.pipe(cssmin()) 
-	.pipe(rename({suffix: '.min'}))
-	.pipe(gulp.dest('./css'));
-});
-
-gulp.task('minjs', function () {
-	gulp.src(['!./src/js/*.min.js','./src/js/*.js'])
-	.pipe(uglify())
-	.pipe(rename({suffix: '.min'}))
-	.pipe(gulp.dest('./js'));
-});
+		.on('error', notify.onError(function(err) { return err; }))
+		.pipe(gulp.dest('dist'))
+		.pipe(notify({
+			onLast: true,
+			title: 'HTML',
+			message: 'HTML has Compiled!'
+		}));
+	}
+}
