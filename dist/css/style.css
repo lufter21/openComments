@@ -572,7 +572,7 @@ h1 {
 .btn, .arrow-btn, .plus-btn {
   display: inline-block;
   font-size: 14px;
-  font-weight: 500;
+  text-transform: uppercase;
   letter-spacing: 1px;
   color: #FFF;
   padding: 15px 28px 14px;
@@ -1868,7 +1868,7 @@ select {
   height: auto;
 }
 
-.list li:before {
+.list li:before, .comm__like:before, .comm__like_add:after {
   display: block;
   content: "";
 }
@@ -2056,6 +2056,7 @@ select {
   transition: .21s;
   background: none;
   border: none;
+  vertical-align: middle;
 }
 
 .comm__replay-btn:hover {
@@ -2070,8 +2071,58 @@ select {
   display: block !important;
 }
 
+.comm__like {
+  position: relative;
+  vertical-align: middle;
+  border: none;
+  background: none;
+  margin-right: 15px;
+  min-height: 16px;
+  padding-left: 20px;
+  color: #aaaaaa;
+}
+
+.comm__like:before {
+  width: 16px;
+  height: 16px;
+  transition: .5s;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  margin-top: -8px;
+  opacity: .4;
+}
+
+.comm__like-count {
+  font-size: 14px;
+}
+
+.comm__like_add:before {
+  display: none;
+}
+
+.comm__like_add:after {
+  width: 16px;
+  height: 16px;
+  transition: .5s;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  margin-top: -8px;
+  z-index: 2;
+  opacity: .6;
+}
+
+.comm__like_add:hover:after {
+  opacity: 1;
+}
+
 .comm_bg {
   background: #eee;
+}
+
+button.comm__like:hover:before {
+  opacity: 1;
 }
 
 /*iFrame*/
@@ -2093,7 +2144,7 @@ select {
   }
 }
 
-.accord__button:after, .arrow-btn:after, .custom-checkbox__input:checked + .custom-checkbox__label:before, .fb-btn, .ok-btn, .plus-btn:after, .form__btn_search:before, .tw-btn, .vk-btn, .video__btn-play {
+.accord__button:after, .arrow-btn:after, .custom-checkbox__input:checked + .custom-checkbox__label:before, .fb-btn, .comm__like:before, .comm__like_add:after, .ok-btn, .plus-btn:after, .form__btn_search:before, .tw-btn, .vk-btn, .video__btn-play {
   background: url("../images/sprite.svg") no-repeat;
 }
 
@@ -2102,82 +2153,103 @@ select {
 }
 
 .arrow-btn:after {
-  background-position: 32.758620689655174% 50%;
-}
-
-.custom-checkbox__input:checked + .custom-checkbox__label:before {
-  background-position: 100% 0;
-}
-
-.fb-btn {
-  background-position: 73.39901477832512% 0;
-}
-
-.ok-btn {
-  background-position: 68.03652968036529% 50%;
-}
-
-.plus-btn:after {
   background-position: 0 100%;
 }
 
-.form__btn_search:before {
-  background-position: 34.1025641025641% 100%;
-}
-
-.tw-btn {
-  background-position: 68.2051282051282% 100%;
-}
-
-.vk-btn {
-  background-position: 0 0;
-}
-
-.video__btn-play {
-  background-position: 39.839572192513366% 0;
-}
-
-.accord__button:after {
-  background-size: 408.59375% auto;
-}
-
-.arrow-btn:after {
-  background-size: 466.96429% auto;
-}
-
-.plus-btn:after {
-  background-size: 408.59375% auto;
-}
-
-.form__btn_search:before {
-  background-size: 408.59375% auto;
-}
-
 .custom-checkbox__input:checked + .custom-checkbox__label:before {
-  background-size: 484.25926% auto;
-}
-
-.vk-btn {
-  background-size: 363.19444% auto;
+  background-position: 94.51754385964912% 91.40893470790378%;
 }
 
 .fb-btn {
-  background-size: 466.96429% auto;
+  background-position: 29.75391498881432% 50%;
 }
 
-.tw-btn {
-  background-size: 408.59375% auto;
+.comm__like:before {
+  background-position: 69.1415313225058% 0;
+}
+
+.comm__like_add:after {
+  background-position: 69.1415313225058% 50%;
 }
 
 .ok-btn {
-  background-size: 653.75% auto;
+  background-position: 89.97912317327766% 50%;
+}
+
+.plus-btn:after {
+  background-position: 27.1461716937355% 100%;
+}
+
+.form__btn_search:before {
+  background-position: 58.0046403712297% 100%;
+}
+
+.tw-btn {
+  background-position: 100% 0;
+}
+
+.vk-btn {
+  background-position: 35.903614457831324% 0;
 }
 
 .video__btn-play {
-  background-size: 363.19444% auto;
+  background-position: 0 0;
+}
+
+.accord__button:after {
+  background-size: 440.625% auto;
+}
+
+.arrow-btn:after {
+  background-size: 503.57143% auto;
+}
+
+.plus-btn:after {
+  background-size: 440.625% auto;
+}
+
+.form__btn_search:before {
+  background-size: 440.625% auto;
+}
+
+.custom-checkbox__input:checked + .custom-checkbox__label:before {
+  background-size: 522.22222% auto;
+}
+
+.vk-btn {
+  background-size: 391.66667% auto;
+}
+
+.fb-btn {
+  background-size: 503.57143% auto;
+}
+
+.tw-btn {
+  background-size: 440.625% auto;
+}
+
+.ok-btn {
+  background-size: 705% auto;
+}
+
+.video__btn-play {
+  background-size: 391.66667% auto;
+}
+
+.comm__like:before {
+  background-size: 424.06015% auto;
+}
+
+.comm__like_add:after {
+  background-size: 424.06015% auto;
 }
 
 
+
+/*font*/
+.fs-18 {
+  font-size: 18px !important;
+}
 
 /*text color*/
 .c-red {

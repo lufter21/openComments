@@ -309,6 +309,37 @@ document.addEventListener('DOMContentLoaded', function() {
 			}
 		});
 	}
+
+	//add like
+	document.addEventListener('click', function(e) {
+		var likeBtnElem = e.target.closest('.js-like');
+
+		if (!likeBtnElem) {
+			return;
+		}
+
+		var countElem = likeBtnElem.querySelector('.comm__like-count'),
+		commId = likeBtnElem.getAttribute('data-comment-id');
+
+		ajax({
+			url: '/functions/like-comment.php',
+			send: 'comm_id='+ commId,
+			success: function(response) {
+				countElem.innerHTML = response;
+
+				if (likeBtnElem.classList.contains('comm__like_add')) {
+					likeBtnElem.classList.remove('comm__like_add');
+				} else {
+					likeBtnElem.classList.add('comm__like_add');
+				}
+			},
+			error: function(response) {
+				console.log(response);
+			}
+		});
+	});
+	
+
 });
 
 function socAuth(data) {

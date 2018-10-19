@@ -50,3 +50,13 @@
 	@extend %svg-youtube;
 	@include bgs(576);
 }
+
+.comm__like:before{
+	@extend %svg-heart;
+	@include bgs(532);
+}
+
+.comm__like_add:after{
+	@extend %svg-heart-rd;
+	@include bgs(532);
+}

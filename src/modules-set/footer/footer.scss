@@ -6,9 +6,7 @@
 .footer{
 	background: #FFF;
 	box-shadow: 0 -1px 11px rgba(0,0,0,.21);
-	&__row{
-		max-width: none;
-	}
+	
 	&__logo{
 		img{
 			width: 100%;
@@ -21,8 +19,19 @@
 		line-height: (18/15);
 	}
 
+	&__dealersair{
+		display: inline-block;
+		width: 100%;
+		max-width: 100px;
+		img{
+			width: 100%;
+			height: auto;
+		}
+	} 
+
 	@media(max-width: 1200px){
 		
 	}
 
 }
+

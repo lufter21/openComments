@@ -2,6 +2,7 @@
 require $_SERVER['DOCUMENT_ROOT'].'/load.php';
 $get = new Comment();
 require $_SERVER['DOCUMENT_ROOT'].'/templates/header.php';
+require $_SERVER['DOCUMENT_ROOT'].'/functions/num2word.php';
 require $_SERVER['DOCUMENT_ROOT'].'/functions/mod-date.php';
 ?>
 
@@ -65,7 +66,8 @@ require $_SERVER['DOCUMENT_ROOT'].'/functions/mod-date.php';
 
 				<div class="row">
 					<div class="col">
-						<b><?php echo count($get->comments); ?> коммент.</b>
+						<?php $comm_count = count($get->comments);
+						 echo '<b class="fs-18">'.$comm_count.'</b> '.num_to_word($comm_count, array('комментарий', 'комментария', 'комментариев')); ?>
 					</div>
 				</div>
 
@@ -99,6 +101,9 @@ require $_SERVER['DOCUMENT_ROOT'].'/functions/mod-date.php';
 									<?php if (!empty($get->user) && ($get->user['user_id'] != $val['comm']['user_id'])) { ?>
 
 									<div>
+										<button data-comment-id="<?php echo $val['comm']['id']; ?>" class="js-like comm__like<?php echo ($val['comm']['likes_users'] != null && in_array($get->user['user_id'], json_decode($val['comm']['likes_users']))) ? ' comm__like_add' : ''; ?>">
+											<span class="comm__like-count"><?php echo ($val['comm']['likes']) ? $val['comm']['likes'] : ''; ?></span>
+										</button>
 										<button class="js-toggle comm__replay-btn" data-target-elements="#replay-form-<?php echo $key; ?>" data-second-text="Отмена">Ответить</button>
 									</div>
 
@@ -124,6 +129,14 @@ require $_SERVER['DOCUMENT_ROOT'].'/functions/mod-date.php';
 											</div>
 										</div>
 									</form>
+
+									<?php } else if ($val['comm']['likes']) { ?>
+
+									<div>
+										<span class="comm__like">
+											<span class="comm__like-count"><?php echo $val['comm']['likes']; ?></span>
+										</span>
+									</div>
 
 									<?php } ?>
 
@@ -159,6 +172,9 @@ require $_SERVER['DOCUMENT_ROOT'].'/functions/mod-date.php';
 
 											<?php if (!empty($get->user) && ($get->user['user_id'] != $repl_val['user_id'])) { ?>
 											<div>
+												<button data-comment-id="<?php echo $repl_val['id']; ?>" class="js-like comm__like<?php echo ($repl_val['likes_users'] != null && in_array($get->user['user_id'], json_decode($repl_val['likes_users']))) ? ' comm__like_add' : ''; ?>">
+													<span class="comm__like-count"><?php echo ($repl_val['likes']) ? $repl_val['likes'] : ''; ?></span>
+												</button>
 												<button class="js-toggle comm__replay-btn" data-target-id="replay-form-<?php echo $key.'-'.$repl_key; ?>" data-second-button-text="Отмена">Ответить</button>
 											</div>
 
@@ -187,7 +203,17 @@ require $_SERVER['DOCUMENT_ROOT'].'/functions/mod-date.php';
 													</div>
 												</div>
 											</form>
+
+											<?php } else if ($repl_val['likes']) { ?>
+
+											<div>
+												<span class="comm__like">
+													<span class="comm__like-count"><?php echo $repl_val['likes']; ?></span>
+												</span>
+											</div>
+												
 											<?php } ?>
+
 										</div>
 									</div>
 									<?php } } } ?>

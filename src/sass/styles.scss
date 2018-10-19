@@ -158,6 +158,7 @@
 			transition: .21s;
 			background: none;
 			border: none;
+			vertical-align: middle;
 			&:hover{
 				color: $bk;
 			}
@@ -169,10 +170,61 @@
 			display: block !important;
 		}
 	}
+	&__like{
+		position: relative;
+		vertical-align: middle;
+		border: none;
+		background: none;
+		margin-right: 15px;
+		min-height: 16px;
+		padding-left: 20px;
+		color: $gy;
+		&:before{
+			@extend %ab;
+			width: 16px;
+			height: 16px;
+			transition: .5s;
+			position: absolute;
+			left: 0;
+			top: 50%;
+			margin-top: -8px;
+			opacity: .4;
+		}
+		&-count{
+			font-size: 14px;
+		}
+		&_add{
+			&:before{
+				display: none;
+			}
+			&:after{
+				@extend %ab;
+				width: 16px;
+				height: 16px;
+				transition: .5s;
+				position: absolute;
+				left: 0;
+				top: 50%;
+				margin-top: -8px;
+				z-index: 2;
+				opacity: .6;
+			}
+			&:hover{
+				&:after{
+					opacity: 1;
+				}
+			}
+		}
+	}
 	&_bg{
 		background: #eee;
 	}
 }
+
+button.comm__like:hover:before{
+	opacity: 1;
+}
+
 
 /*iFrame*/
 .iframe-wrap{

@@ -14,7 +14,7 @@
 
 %svg-arrow-right {
 	@extend %svg-common;
-	background-position: 32.758620689655174% 50%;
+	background-position: 0 100%;
 }
 
 %svg-arrow-right-dims {
@@ -24,7 +24,7 @@
 
 %svg-check {
 	@extend %svg-common;
-	background-position: 100% 0;
+	background-position: 94.51754385964912% 91.40893470790378%;
 }
 
 %svg-check-dims {
@@ -34,7 +34,7 @@
 
 %svg-facebook {
 	@extend %svg-common;
-	background-position: 73.39901477832512% 0;
+	background-position: 29.75391498881432% 50%;
 }
 
 %svg-facebook-dims {
@@ -42,9 +42,29 @@
 	height: 532px;
 }
 
+%svg-heart {
+	@extend %svg-common;
+	background-position: 69.1415313225058% 0;
+}
+
+%svg-heart-dims {
+	width: 532px;
+	height: 532px;
+}
+
+%svg-heart-rd {
+	@extend %svg-common;
+	background-position: 69.1415313225058% 50%;
+}
+
+%svg-heart-rd-dims {
+	width: 532px;
+	height: 532px;
+}
+
 %svg-odnoklassniki {
 	@extend %svg-common;
-	background-position: 68.03652968036529% 50%;
+	background-position: 89.97912317327766% 50%;
 }
 
 %svg-odnoklassniki-dims {
@@ -54,7 +74,7 @@
 
 %svg-plus-circle {
 	@extend %svg-common;
-	background-position: 0 100%;
+	background-position: 27.1461716937355% 100%;
 }
 
 %svg-plus-circle-dims {
@@ -64,7 +84,7 @@
 
 %svg-search {
 	@extend %svg-common;
-	background-position: 34.1025641025641% 100%;
+	background-position: 58.0046403712297% 100%;
 }
 
 %svg-search-dims {
@@ -74,7 +94,7 @@
 
 %svg-twitter {
 	@extend %svg-common;
-	background-position: 68.2051282051282% 100%;
+	background-position: 100% 0;
 }
 
 %svg-twitter-dims {
@@ -84,7 +104,7 @@
 
 %svg-vk {
 	@extend %svg-common;
-	background-position: 0 0;
+	background-position: 35.903614457831324% 0;
 }
 
 %svg-vk-dims {
@@ -94,7 +114,7 @@
 
 %svg-youtube {
 	@extend %svg-common;
-	background-position: 39.839572192513366% 0;
+	background-position: 0 0;
 }
 
 %svg-youtube-dims {

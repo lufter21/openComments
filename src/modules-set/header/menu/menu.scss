@@ -7,11 +7,11 @@
 .menu{
 	@include clr;
 	list-style: none;
-	padding-top: 8px;
+	padding-top: 18px;
 	
 	&__item{
 		float: left;
-		margin-left: 45px;
+		margin-left: 70px;
 		
 		&:first-child{
 			margin-left: 0;
@@ -37,12 +37,12 @@
 		&_current{
 			.menu__a{
 				border-bottom-color: $bk;
+				color: $bk !important;
 			}
 		}
 	}
 
 	&__a{
-		font-size: 18px;
 		font-weight: 500;
 		text-decoration: none;
 		border-bottom: 2px solid transparent;
