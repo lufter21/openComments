@@ -104,6 +104,7 @@ require $_SERVER['DOCUMENT_ROOT'].'/functions/mod-date.php';
 										<button data-comment-id="<?php echo $val['comm']['id']; ?>" class="js-like comm__like<?php echo ($val['comm']['likes_users'] != null && in_array($get->user['user_id'], json_decode($val['comm']['likes_users']))) ? ' comm__like_add' : ''; ?>">
 											<span class="comm__like-count"><?php echo ($val['comm']['likes']) ? $val['comm']['likes'] : ''; ?></span>
 										</button>
+
 										<button class="js-toggle comm__replay-btn" data-target-elements="#replay-form-<?php echo $key; ?>" data-second-text="Отмена">Ответить</button>
 									</div>
 
@@ -175,31 +176,30 @@ require $_SERVER['DOCUMENT_ROOT'].'/functions/mod-date.php';
 												<button data-comment-id="<?php echo $repl_val['id']; ?>" class="js-like comm__like<?php echo ($repl_val['likes_users'] != null && in_array($get->user['user_id'], json_decode($repl_val['likes_users']))) ? ' comm__like_add' : ''; ?>">
 													<span class="comm__like-count"><?php echo ($repl_val['likes']) ? $repl_val['likes'] : ''; ?></span>
 												</button>
-												<button class="js-toggle comm__replay-btn" data-target-id="replay-form-<?php echo $key.'-'.$repl_key; ?>" data-second-button-text="Отмена">Ответить</button>
+
+												<button class="js-toggle comm__replay-btn" data-target-elements="#replay-form-<?php echo $key.'-'.$repl_key; ?>" data-second-text="Отмена">Ответить</button>
 											</div>
 
-											<form id="replay-form-<?php echo $key.'-'.$repl_key; ?>" action="/functions/add-comment.php" method="POST" class="comm__form js-replay-form form hide on-toggled-show">
+											<form id="replay-form-<?php echo $key.'-'.$repl_key; ?>" action="/functions/add-comment.php" method="POST" class="comm__form js-replay-form form hidden">
 												<input type="hidden" name="resource_id" value="<?php echo $get->resource['id']; ?>">
 												<input type="hidden" name="parent" value="<?php echo $val['comm']['id']; ?>">
 												<input type="hidden" name="relation" value="<?php echo $repl_val['id']; ?>">
 												<input type="hidden" name="relation_name" value="<?php echo $repl_val['user_name']; ?>">
 
 												<div class="row">
-													<div class="col pad-0">
+													<div class="col-12 p-x-0">
 														<div class="form__field">
-															<div class="pos-r">
-																<div class="form__textarea-mirror"></div>
-																<textarea name="comment" data-required="true" class="form__textarea form__textarea_var-h"></textarea>
-																<label class="overlabel">Добавьте ответ</label>
+															<div class="var-height-textarea">
+																<div class="var-height-textarea__mirror"></div>
+																<textarea name="comment" placeholder="Оставьте комментарий" data-required="true" class="var-height-textarea__textarea form__textarea"></textarea>
 															</div>
-															<div class="form__error-tip">Заполните поле</div>
+															<div class="field-error-tip">Заполните поле</div>
 														</div>
 													</div>
 												</div>
-
 												<div class="row">
-													<div class="col-right pad-0">
-														<button type="submit" class="button button_red">Отправить</button>
+													<div class="col-12 ta-r p-0">
+														<button type="submit" class="form__submit btn">Отправить</button>
 													</div>
 												</div>
 											</form>
